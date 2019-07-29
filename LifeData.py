@@ -3,32 +3,44 @@ import pygame
 import time 
 
 
-class Game:
-    def __init__(self):
-        self.colors = {'black': (0,0,0),
-                       'white':(255,255,255),
-                       'red':(255,0,0),
-                       'green':(0,255,0),
-                       'blue':(0,0,255)}
+class Game():
+    colors = {'black': (0,0,0),
+                    'white':(255,255,255),
+                    'red':(255,0,0),
+                    'green':(0,255,0),
+                    'blue':(0,0,255)}
 
-        self.resolution = 1200,600  # размер экрана
+    resolution = 1200,600  # размер экрана
 
-        self.fps_controller = pygame.time.Clock()
+    fps_controller = pygame.time.Clock()
     
         
     def refresh_screen(self):
         """обновляем экран и задаем фпс"""
         pygame.display.flip()
-        game.fps_controller.tick(23)
+        self.fps_controller.tick(23)
         pygame.display.update()
 
 class Cells():
-    pass
+    def __init__(self,):
+        self.cells = {}
 
-class Cell(Cells):
-    pass
+
+    def cells_generator(self,size):
+        height, width = size
+        i = 0
+        for h in range(0,height,10):
+            for w in range(0,width,10):
+                self.cells[i] = Cell((h,w),False)
+                i+=1
+
+class Cell():
+    def __init__(self, pos, fill):
+        self.size = 10
+        self.pos = pos
+        self.fill = False
     
-class Objects:
+class Objects():
     objects = {}
 
     statistic = {'personObject':0,
@@ -116,23 +128,21 @@ class Person():
          # Я не знаю как правильно это написать, создание нового перса, и еще
          # не уверен что удаление персов тоже сработает
 
-
-
-class Food:
+class Food():
     def __init__(self):
         
         self.position = 1,1
 
-class Spawner:
+class Spawner():
     '''Спавнит объекты'''
     pass
 
 
 class Drawer():
     def drawObjects(self,objects,screen):
-        '''Рисует принятый объект'''
+        '''Рисует принятый объект(ы)'''
         for object in objects:
-            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(object.position))
+            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(objects[object].position))
 
     def pos_to_draw(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''

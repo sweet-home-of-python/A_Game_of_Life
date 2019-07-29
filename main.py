@@ -6,6 +6,9 @@ from LifeData import *
 game = Game() # Класс настроек
 
 
+cells = Cells() # Создаем сетку
+
+cells.cells_generator(game.resolution)
 
 pygame.init()
 sc = pygame.display.set_mode(game.resolution)
@@ -26,20 +29,19 @@ pers10 = Person("fin")
 #sc.fill(game.colors['white']) # Заливка
 
 Play = True # Запуск
-a = 0 
+
+drawer = Drawer()
+
 while Play:
     sc.fill(game.colors['white'])# Заливка
-    Drawer.drawObjects(Drawer,Objects.objects,sc)
-
-
-
+    drawer.drawObjects(Objects.objects,sc)
+        
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
         #Objects.objects[obj_tag].draw(sc)
     
     time.sleep(0.1)
     
-
     game.refresh_screen() # Обновляет экран
 
 
