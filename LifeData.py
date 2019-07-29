@@ -115,7 +115,7 @@ class Person():
          
 
     def life_control(self):
-        print('poseluy mou zalupu')
+       
         print('incest with young boys')
 
     def face_to_face(self,person2):
