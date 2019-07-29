@@ -31,6 +31,8 @@ Play = True # Запуск
 
 drawer = Drawer()
 
+print(Objects.objects)
+
 while Play:
     sc.fill(game.colors['white'])# Заливка
     drawer.drawObjects(Objects.objects,sc)
