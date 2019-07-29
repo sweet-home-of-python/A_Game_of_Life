@@ -3,7 +3,7 @@ import pygame
 import time 
 
 
-class Game():
+class Game:
     def __init__(self):
         self.colors = {'black': (0,0,0),
                        'white':(255,255,255),
@@ -20,6 +20,7 @@ class Game():
         """обновляем экран и задаем фпс"""
         pygame.display.flip()
         game.fps_controller.tick(23)
+        pygame.display.update()
 
 class Cells():
     pass
@@ -103,15 +104,15 @@ class Person():
         print('poseluy mou zalupu')
         print('incest with young boys')
 
-    def face_to_face(person1,person2):
+    def face_to_face(self,person2):
         '''Обработка встречи, если одинаковый пол то махач, если разный то чпоканье'''
-        if person1.gender == person2.gender:
-            if person1.health > person2.health:
+        if self.gender == person2.gender:
+            if self.health > person2.health:
                 del person2
-            if person1.health < person2.health:
-                del person1
-        else:
-           person = Person(person1.name + person2.name)
+            if self.health < person2.health:
+                del self
+        #else:
+           #person = Person(self.name + person2.name)
          # Я не знаю как правильно это написать, создание нового перса, и еще
          # не уверен что удаление персов тоже сработает
 
@@ -128,9 +129,10 @@ class Spawner:
 
 
 class Drawer():
-    def drawObjects(self,object,screen):
+    def drawObjects(self,objects,screen):
         '''Рисует принятый объект'''
-        pygame.draw.rect(screen,Game.colors['black'],self.pos_to_draw(object.position))
+        for object in objects:
+            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(object.position))
 
     def pos_to_draw(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''

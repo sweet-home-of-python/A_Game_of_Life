@@ -3,13 +3,13 @@
 from LifeData import *
 
 
-game = Game()
+game = Game() # Класс настроек
 
 
 
 pygame.init()
 sc = pygame.display.set_mode(game.resolution)
-clock = pygame.time.Clock()
+#clock = pygame.time.Clock()
 
 
 
@@ -29,12 +29,18 @@ Play = True # Запуск
 a = 0 
 while Play:
     sc.fill(game.colors['white'])# Заливка
+    Drawer.drawObjects(Drawer,Objects.objects,sc)
+
+
+
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
-        Objects.objects[obj_tag].draw(sc)
-    pygame.display.update()
+        #Objects.objects[obj_tag].draw(sc)
+    
     time.sleep(0.1)
-    clock.tick(FPS)
+    
+
+    game.refresh_screen() # Обновляет экран
 
 
 
