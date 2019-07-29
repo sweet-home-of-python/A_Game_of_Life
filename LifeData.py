@@ -14,7 +14,7 @@ class Game:
         self.resolution = 1200,600  # размер экрана
 
         self.fps_controller = pygame.time.Clock()
-    
+        self.time = 0 # время нужно чтобы отсчитывать возраст и для голода
         
     def refresh_screen(self):
         """обновляем экран и задаем фпс"""
@@ -47,13 +47,13 @@ class Person():
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
-
+        self.eat = False
         # Особенности
         self.gender = self.random_gender()
-        
+        self.age = 1 # возраст
         # параметры организма
         self.health = 100
-        self.starve = 10
+        self.starve = 0
         self.alive = True
 
         # Местоположение
@@ -68,11 +68,17 @@ class Person():
         genders = ['male','female']
         return rand.choice(genders)
 
+    def death(self):
+        ''' Различный причины смерти пиздюка'''
+        if self.age >= 80:
+            self.alive = False
+        if self.health <=0:
+            self.alive = False
+            
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  0 - лево
         move = rand.choice(move_direction)
         x,y = self.position
-
         if move == 1: 
             x-=10
         if move == 2:
@@ -95,10 +101,18 @@ class Person():
             y-=self.step
 
         self.position = x,y
-
+        
     def sensor(self):
         pass
-       
+
+    def golod(self):
+        if self.movenment() == True: # еще не знаю как правильно обработать это, чтобы после каждого движения он голоднее становился
+            self.starve +=1
+        if self.starve > 30:
+            self.eat = False
+            self.health -=1
+
+         
 
     def life_control(self):
         print('poseluy mou zalupu')
