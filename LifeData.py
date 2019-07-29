@@ -128,7 +128,7 @@ class Person():
 
     def life_control(self):
        
-        print('incest with young boys')
+        print('incest with  boys')
 
     def face_to_face(self,person2):
         '''Обработка встречи, если одинаковый пол то махач, если разный то чпоканье'''
