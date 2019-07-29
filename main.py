@@ -5,9 +5,8 @@ from LifeData import *
 
 game = Game() # Класс настроек
 
-
+# Инициализация сетки
 cells = Cells() # Создаем сетку
-
 cells.cells_generator(game.resolution)
 
 pygame.init()
@@ -38,11 +37,8 @@ while Play:
         
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
-        #Objects.objects[obj_tag].draw(sc)
     
-    time.sleep(0.1)
-    
-    game.refresh_screen() # Обновляет экран
+    game.refresh_screen(30) # Обновляет экран 
 
 
 

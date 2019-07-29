@@ -15,10 +15,10 @@ class Game():
     fps_controller = pygame.time.Clock()
     
         
-    def refresh_screen(self):
-        """обновляем экран и задаем фпс"""
+    def refresh_screen(self,fps):
+        """Обновляет экран с заданным числом кадров. Принимает ФПС"""
         pygame.display.flip()
-        self.fps_controller.tick(23)
+        self.fps_controller.tick(fps)
         pygame.display.update()
 
 class Cells():
