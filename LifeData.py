@@ -17,7 +17,7 @@ class Game():
         
     def refresh_screen(self,fps):
         """Обновляет экран с заданным числом кадров. Принимает ФПС"""
-        pygame.display.flip()
+        #pygame.display.flip()
         self.fps_controller.tick(fps)
         pygame.display.update()
 
@@ -72,6 +72,7 @@ class Person():
 
         # Местоположение
         self.position = 500,300 # НУжно переделать
+        self.cell_pos = 0
         self.step = 20
 
 
@@ -88,11 +89,26 @@ class Person():
             self.alive = False
         if self.health <=0:
             self.alive = False
-            
-    def movenment(self):
+    
+    def find_cells_pos(self):
+        '''Ищет позицию перса в ячейках. Возможно нужно вынести в отдельную вспомогательную функцию'''
+        for cel in cells:
+            if self.position == cells[cel]:
+                self.pos_in_cell = cel
+
+    def movenment_new(self,cells):
+        '''Обработчик движения'''
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
         x,y = self.position
+        pos
+        
+
+
+    def movenment(self):
+        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
+        move = rand.choice(move_direction)
+        
         if move == 1: 
             x-=10
         if move == 2:
@@ -181,3 +197,4 @@ def cell_visualisator(screen,cells,radius):
     for cell in cells:
         pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
         i+=1
+    
