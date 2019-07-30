@@ -3,32 +3,44 @@ import pygame
 import time 
 
 
-class Game:
-    def __init__(self):
-        self.colors = {'black': (0,0,0),
-                       'white':(255,255,255),
-                       'red':(255,0,0),
-                       'green':(0,255,0),
-                       'blue':(0,0,255)}
+class Game():
+    colors = {'black': (0,0,0),
+                    'white':(255,255,255),
+                    'red':(255,0,0),
+                    'green':(0,255,0),
+                    'blue':(0,0,255)}
 
-        self.resolution = 1200,600  # размер экрана
+    resolution = 1200,600  # размер экрана
 
-        self.fps_controller = pygame.time.Clock()
+    fps_controller = pygame.time.Clock()
     
         
-    def refresh_screen(self):
-        """обновляем экран и задаем фпс"""
+    def refresh_screen(self,fps):
+        """Обновляет экран с заданным числом кадров. Принимает ФПС"""
         pygame.display.flip()
-        game.fps_controller.tick(23)
+        self.fps_controller.tick(fps)
         pygame.display.update()
 
 class Cells():
-    pass
+    def __init__(self,):
+        self.cells = {}
 
-class Cell(Cells):
-    pass
+
+    def cells_generator(self,size):
+        height, width = size
+        i = 0
+        for h in range(0,height,10):
+            for w in range(0,width,10):
+                self.cells[i] = Cell((h,w),False)
+                i+=1
+
+class Cell():
+    def __init__(self, pos, fill):
+        self.size = 10
+        self.pos = pos
+        self.fill = False
     
-class Objects:
+class Objects():
     objects = {}
 
     statistic = {'personObject':0,
@@ -47,13 +59,13 @@ class Person():
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
-
+        self.eat = False
         # Особенности
         self.gender = self.random_gender()
-        
+        self.age = 1 # возраст
         # параметры организма
         self.health = 100
-        self.starve = 10
+        self.starve = 0
         self.alive = True
 
         # Местоположение
@@ -68,11 +80,17 @@ class Person():
         genders = ['male','female']
         return rand.choice(genders)
 
+    def death(self):
+        ''' Различный причины смерти пиздюка'''
+        if self.age >= 80:
+            self.alive = False
+        if self.health <=0:
+            self.alive = False
+            
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
         x,y = self.position
-
         if move == 1: 
             x-=10
         if move == 2:
@@ -95,14 +113,22 @@ class Person():
             y-=self.step
 
         self.position = x,y
-
+        
     def sensor(self):
         pass
-       
+
+    def golod(self):
+        if self.movenment() == True: # еще не знаю как правильно обработать это, чтобы после каждого движения он голоднее становился
+            self.starve +=1
+        if self.starve > 30:
+            self.eat = False
+            self.health -=1
+
+         
 
     def life_control(self):
-        print('poseluy mou zalupu')
-        print('incest with young boys')
+       
+        print('incest with  boys')
 
     def face_to_face(self,person2):
         '''Обработка встречи, если одинаковый пол то махач, если разный то чпоканье'''
@@ -116,23 +142,21 @@ class Person():
          # Я не знаю как правильно это написать, создание нового перса, и еще
          # не уверен что удаление персов тоже сработает
 
-
-
-class Food:
+class Food():
     def __init__(self):
         
         self.position = 1,1
 
-class Spawner:
+class Spawner():
     '''Спавнит объекты'''
     pass
 
 
 class Drawer():
     def drawObjects(self,objects,screen):
-        '''Рисует принятый объект'''
+        '''Рисует принятый объект(ы)'''
         for object in objects:
-            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(object.position))
+            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(objects[object].position))
 
     def pos_to_draw(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
