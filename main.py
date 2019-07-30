@@ -6,7 +6,7 @@ from LifeData import *
 game = Game() # Класс настроек
 
 # Инициализация сетки
-cells = Cells() # Создаем сетку
+cells = Cells(10) # Создаем сетку
 cells.cells_generator(game.resolution)
 
 pygame.init()
@@ -35,6 +35,9 @@ print(Objects.objects)
 
 while Play:
     sc.fill(game.colors['white'])# Заливка
+
+    cell_visualisator(sc,cells.cells,2)
+
     drawer.drawObjects(Objects.objects,sc)
         
     for obj_tag in Objects.objects: # обработка всех объектов

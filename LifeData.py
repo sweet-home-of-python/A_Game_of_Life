@@ -22,15 +22,17 @@ class Game():
         pygame.display.update()
 
 class Cells():
-    def __init__(self,):
+    def __init__(self,size):
+        '''Создает сетку. Принимает в виде аргумента шаг.'''
         self.cells = {}
+        self.size = size
 
 
     def cells_generator(self,size):
         height, width = size
         i = 0
-        for h in range(0,height,10):
-            for w in range(0,width,10):
+        for h in range(0,height,self.size):
+            for w in range(0,width,self.size):
                 self.cells[i] = Cell((h,w),False)
                 i+=1
 
@@ -156,10 +158,26 @@ class Drawer():
     def drawObjects(self,objects,screen):
         '''Рисует принятый объект(ы)'''
         for object in objects:
-            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(objects[object].position))
+            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw_rect(objects[object].position))
 
-    def pos_to_draw(self, position):
+    def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
             size = 10
             x,y = position
             return  x - size, y - size, size * 2, size * 2
+    
+    def pos_to_draw_circ(self,position):
+        '''Преобразует центральные координаты в координаты для круга'''
+        radius = 5
+        return  position, radius
+
+# Вспомогательные функции
+
+# Временные функции
+
+def cell_visualisator(screen,cells,radius):
+    '''Отображает ячейки'''
+    i =1
+    for cell in cells:
+        pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
+        i+=1
