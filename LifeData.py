@@ -17,20 +17,22 @@ class Game():
         
     def refresh_screen(self,fps):
         """Обновляет экран с заданным числом кадров. Принимает ФПС"""
-        pygame.display.flip()
+        #pygame.display.flip()
         self.fps_controller.tick(fps)
         pygame.display.update()
 
 class Cells():
-    def __init__(self,):
+    def __init__(self,size):
+        '''Создает сетку. Принимает в виде аргумента шаг.'''
         self.cells = {}
+        self.size = size
 
 
     def cells_generator(self,size):
         height, width = size
         i = 0
-        for h in range(0,height,10):
-            for w in range(0,width,10):
+        for h in range(0,height,self.size):
+            for w in range(0,width,self.size):
                 self.cells[i] = Cell((h,w),False)
                 i+=1
 
@@ -70,11 +72,22 @@ class Person():
 
         # Местоположение
         self.position = 500,300 # НУжно переделать
+        self.cell_pos = 0
         self.step = 20
 
 
         Objects.get_object(self)
     
+    def new_name(name1,name2):
+        ''' создает новое имя из двух''' 
+        dl1 = len(name1)
+        sym1 = dl1 // 2
+        dl2 = len(name2)
+        sym2 = dl2 // 2
+        name1 = name1[:sym1]
+        name2 = name2[:sym2]
+        name2 = name2.lower()
+        print(name1+name2)
 
     def random_gender(self):
         genders = ['male','female']
@@ -86,11 +99,26 @@ class Person():
             self.alive = False
         if self.health <=0:
             self.alive = False
-            
-    def movenment(self):
+    
+    def find_cells_pos(self):
+        '''Ищет позицию перса в ячейках. Возможно нужно вынести в отдельную вспомогательную функцию'''
+        for cel in cells:
+            if self.position == cells[cel]:
+                self.pos_in_cell = cel
+
+    def movenment_new(self,cells):
+        '''Обработчик движения'''
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
         x,y = self.position
+        pos
+        
+
+
+    def movenment(self):
+        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
+        move = rand.choice(move_direction)
+        
         if move == 1: 
             x-=10
         if move == 2:
@@ -156,10 +184,27 @@ class Drawer():
     def drawObjects(self,objects,screen):
         '''Рисует принятый объект(ы)'''
         for object in objects:
-            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw(objects[object].position))
+            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw_rect(objects[object].position))
 
-    def pos_to_draw(self, position):
+    def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
             size = 10
             x,y = position
             return  x - size, y - size, size * 2, size * 2
+    
+    def pos_to_draw_circ(self,position):
+        '''Преобразует центральные координаты в координаты для круга'''
+        radius = 5
+        return  position, radius
+
+# Вспомогательные функции
+
+# Временные функции
+
+def cell_visualisator(screen,cells,radius):
+    '''Отображает ячейки'''
+    i =1
+    for cell in cells:
+        pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
+        i+=1
+    
