@@ -118,7 +118,7 @@ class Person():
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
-        
+        x,y = self.position
         if move == 1: 
             x-=10
         if move == 2:
