@@ -78,6 +78,16 @@ class Person():
 
         Objects.get_object(self)
     
+    def new_name(name1,name2):
+        ''' создает новое имя из двух''' 
+        dl1 = len(name1)
+        sym1 = dl1 // 2
+        dl2 = len(name2)
+        sym2 = dl2 // 2
+        name1 = name1[:sym1]
+        name2 = name2[sym2:]
+        name2 = name2.lower()
+        print(name1+name2)
 
     def random_gender(self):
         genders = ['male','female']
@@ -108,7 +118,7 @@ class Person():
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
-        
+        x,y = self.position
         if move == 1: 
             x-=10
         if move == 2:
