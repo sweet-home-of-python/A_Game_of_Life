@@ -48,9 +48,11 @@ while Play:
         
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
-    pers2.find_cells_pos()
-    print(pers2.pos_in_cell)
-    game.refresh_screen(30) # Обновляет экран
+        Objects.objects[obj_tag].find_cells_pos()
+        cells.cells[Objects.objects[obj_tag].pos_in_cell].fill = True
+        print(cells.cells[Objects.objects[obj_tag].pos_in_cell].fill)
+    
+
     
 
 
