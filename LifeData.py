@@ -57,7 +57,7 @@ class Objects():
     
 
 class Person():
-    def __init__(self, name,persData):
+    def __init__(self, name,persData,size):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
@@ -70,7 +70,7 @@ class Person():
         self.starve = 0
         self.alive = True
         self.eat = False
-
+        self.size = size
         self.cells = persData
         
 
@@ -175,16 +175,19 @@ class Spawner():
 
 
 class Drawer():
+    def __init__(self):
+        self.size = 10
     def drawObjects(self,objects,screen):
         '''Рисует принятый объект(ы)'''
         for object in objects:
             pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw_rect(objects[object].position))
+            self.size = objects[object].size
 
     def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
-            size = 10
+            
             x,y = position
-            return  x - size, y - size, size * 2, size * 2
+            return  x - self.size, y - self.size, self.size * 2, self.size * 2
     
     def pos_to_draw_circ(self,position):
         '''Преобразует центральные координаты в координаты для круга'''

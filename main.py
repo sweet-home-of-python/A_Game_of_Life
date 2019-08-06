@@ -1,5 +1,6 @@
 
 
+
 from LifeData import *
 
 
@@ -8,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-cells = Cells(10) # Создаем сетку
+cells = Cells(20) # Создаем сетку
 cells.cells_generator(game.resolution)
 #######################################
 
@@ -24,8 +25,10 @@ pygame.display.set_caption('A Game of Life')
 persData = cells
 
 
-pers = Person("jake", persData)# пиздюки
-pers2 = Person("hudoi",persData)
+pers = Person("jake", persData,40)# пиздюки
+pers2 = Person("julia", persData,10)
+pers3 = Person("jenifer", persData,5)# пиздюки
+pers4 = Person("marina_suka", persData,20)
 
 
 Play = True # Запуск
@@ -43,17 +46,20 @@ while Play:
     sc.fill(game.colors['white'])# Заливка
 
     cell_visualisator(sc,cells.cells,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
- 
+    
     drawer.drawObjects(Objects.objects,sc)
-        
+    
+    
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
         Objects.objects[obj_tag].find_cells_pos()
         cells.cells[Objects.objects[obj_tag].pos_in_cell].fill = True
         print(cells.cells[Objects.objects[obj_tag].pos_in_cell].fill)
     
+    game.refresh_screen(30) # Обновляет экран 
 
     
+
 
 
 
