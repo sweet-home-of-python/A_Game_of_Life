@@ -57,7 +57,7 @@ class Objects():
     
 
 class Person():
-    def __init__(self, name):
+    def __init__(self, name,persData):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
@@ -70,6 +70,9 @@ class Person():
         self.starve = 0
         self.alive = True
 
+        self.cells = persData
+       
+
         # Местоположение
         self.position = 500,300 # НУжно переделать
         self.cell_pos = 0
@@ -78,17 +81,6 @@ class Person():
 
         Objects.get_object(self)
     
-    def new_name(name1,name2):
-        ''' создает новое имя из двух''' 
-        dl1 = len(name1)
-        sym1 = dl1 // 2
-        dl2 = len(name2)
-        sym2 = dl2 // 2
-        name1 = name1[:sym1]
-        name2 = name2[sym2:]
-        name2 = name2.lower()
-        print(name1+name2)
-
     def random_gender(self):
         genders = ['male','female']
         return rand.choice(genders)
@@ -102,8 +94,9 @@ class Person():
     
     def find_cells_pos(self):
         '''Ищет позицию перса в ячейках. Возможно нужно вынести в отдельную вспомогательную функцию'''
+        cells = self.cells.cells
         for cel in cells:
-            if self.position == cells[cel]:
+            if self.position == cells[cel].pos:
                 self.pos_in_cell = cel
 
     def movenment_new(self,cells):
