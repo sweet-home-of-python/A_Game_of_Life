@@ -25,7 +25,7 @@ persData = cells
 
 
 pers = Person("jake", persData)# пиздюки
-
+pers2 = Person("hudoi",persData)
 
 
 Play = True # Запуск
@@ -48,8 +48,10 @@ while Play:
         
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
+    pers2.find_cells_pos()
+    print(pers2.pos_in_cell)
+    game.refresh_screen(30) # Обновляет экран
     
-    game.refresh_screen(30) # Обновляет экран 
 
 
 

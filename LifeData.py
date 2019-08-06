@@ -75,7 +75,7 @@ class Person():
 
         # Местоположение
         self.position = 500,300 # НУжно переделать
-        self.cell_pos = 0
+        self.pos_in_cell = 0
         self.step = 20
 
 
