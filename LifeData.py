@@ -22,23 +22,23 @@ class Game():
         pygame.display.update()
 
 class Cells():
-    def __init__(self,size):
+    def __init__(self,cells_size):
         '''Создает сетку. Принимает в виде аргумента шаг.'''
         self.cells = {}
-        self.size = size
+        self.cells_size = cells_size
 
 
     def cells_generator(self,size):
         height, width = size
         i = 0
-        for h in range(0,height,self.size):
-            for w in range(0,width,self.size):
-                self.cells[i] = Cell((h,w),False)
+        for h in range(0,height,self.cells_size):
+            for w in range(0,width,self.cells_size):
+                self.cells[i] = Cell((h,w))
                 i+=1
 
 class Cell():
-    def __init__(self, pos, fill):
-        self.size = 10
+    def __init__(self, pos):
+        #self.size = 10
         self.pos = pos
         self.fill = False
     
@@ -61,7 +61,7 @@ class Person():
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
-        self.eat = False
+
         # Особенности
         self.gender = self.random_gender()
         self.age = 1 # возраст
@@ -69,13 +69,14 @@ class Person():
         self.health = 100
         self.starve = 0
         self.alive = True
+        self.eat = False
 
         self.cells = persData
-       
+        
 
         # Местоположение
         self.position = 500,300 # НУжно переделать
-        self.cell_pos = 0
+        self.pos_in_cell = 0
         self.step = 20
 
 
@@ -106,7 +107,7 @@ class Person():
         x,y = self.position
         pos
         
-
+        Cells.cells[i].fill = True
 
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
