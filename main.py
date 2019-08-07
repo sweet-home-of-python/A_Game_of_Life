@@ -25,11 +25,13 @@ pygame.display.set_caption('A Game of Life')
 persData = cells
 
 
-pers = Person("jake", persData,40)# пиздюки
-pers2 = Person("julia", persData,10)
-pers3 = Person("jenifer", persData,5)# пиздюки
-pers4 = Person("marina_suka", persData,20)
 
+pers = Person("Yarik", persData,100)
+
+pesosus = []
+
+for i in range(0,10):
+    pesosus.append(Person(str(i),persData,10))
 
 Play = True # Запуск
 
@@ -54,9 +56,10 @@ while Play:
         Objects.objects[obj_tag].movenment()
         Objects.objects[obj_tag].find_cells_pos()
         cells.cells[Objects.objects[obj_tag].pos_in_cell].fill = True
-        print(cells.cells[Objects.objects[obj_tag].pos_in_cell].fill)
-    
-    game.refresh_screen(30) # Обновляет экран 
+    pers.golod()    
+    if pers.health == 0:
+        print(pers.name + " bolshe ne pridet")
+    game.refresh_screen(10) # Обновляет экран 
 
     
 

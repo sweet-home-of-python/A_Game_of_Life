@@ -70,7 +70,7 @@ class Person():
         self.starve = 0
         self.alive = True
         self.eat = False
-        self.size = size
+        self.size = size #размер ебаного организма
         self.cells = persData
         
 
@@ -86,7 +86,7 @@ class Person():
         genders = ['male','female']
         return rand.choice(genders)
 
-    def death(self):
+    def death_reason(self):
         ''' Различный причины смерти пиздюка'''
         if self.age >= 80:
             self.alive = False
@@ -133,17 +133,14 @@ class Person():
         if move == 8: 
             x-=10 
             y-=self.step
-
+        self.starve +=1
         self.position = x,y
         
     def sensor(self):
         pass
 
     def golod(self):
-        if self.movenment() == True: # еще не знаю как правильно обработать это, чтобы после каждого движения он голоднее становился
-            self.starve +=1
         if self.starve > 30:
-            self.eat = False
             self.health -=1
 
          
@@ -181,7 +178,7 @@ class Drawer():
         '''Рисует принятый объект(ы)'''
         for object in objects:
             pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw_rect(objects[object].position))
-            self.size = objects[object].size
+            self.size = objects[object].size #приблуда чтобы по размеру отрисовывались
 
     def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
