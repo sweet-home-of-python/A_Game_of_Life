@@ -1,7 +1,7 @@
 import random as rand
 import pygame
 import time 
-
+from miscLife import*
 
 class Game():
     colors = {'black': (0,0,0),
@@ -60,7 +60,7 @@ class Person():
     def __init__(self, name,persData,size):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
-        self.name = name
+        self.name = self.nameos()
 
         # Особенности
         self.gender = self.random_gender()
@@ -146,6 +146,11 @@ class Person():
             self.health -=1
 
          
+    def nameos(self):
+        if self.gender == "male":
+            mn = rand.choice(m_names)
+            return self.name == mn
+        
 
     def life_control(self):
        
