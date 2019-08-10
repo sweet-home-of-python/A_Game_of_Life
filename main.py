@@ -71,6 +71,8 @@ while Play:
     for i in range(0,count):
         pesosus.append(Person(str(i),persData,10))
     
+    tagg = Objects.objects.keys()
+
     
     print(len(Objects.objects))
             
