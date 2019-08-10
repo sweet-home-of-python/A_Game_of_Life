@@ -57,13 +57,13 @@ class Objects():
     
 
 class Person():
-    def __init__(self, name,persData,size):
+    def __init__(self, name,persData,size,gender):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
 
         # Особенности
-        self.gender = self.random_gender()
+        self.gender = gender
         self.age = 1 # возраст
         # параметры организма
         self.health = 100
