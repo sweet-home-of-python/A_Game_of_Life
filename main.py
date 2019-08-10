@@ -2,7 +2,7 @@
 
 
 from LifeData import *
-
+import os
 
 game = Game() # Класс настроек
 
@@ -26,7 +26,7 @@ persData = cells
 
 
 
-pers = Person("Yarik", persData,100)
+
 
 pesosus = []
 
@@ -52,13 +52,17 @@ while Play:
     drawer.drawObjects(Objects.objects,sc)
     
     
+    info = ''
     for obj_tag in Objects.objects: # обработка всех объектов
+        find_cells_pos(Objects.objects[obj_tag],cells)
         Objects.objects[obj_tag].movenment()
-        Objects.objects[obj_tag].find_cells_pos()
         cells.cells[Objects.objects[obj_tag].pos_in_cell].fill = True
-    pers.golod()    
-    if pers.health == 0:
-        print(pers.name + " bolshe ne pridet")
+        
+        info += str(Objects.objects[obj_tag])
+
+        print(info)
+        os.system('cls')
+
     game.refresh_screen(10) # Обновляет экран 
 
     
