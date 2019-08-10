@@ -71,9 +71,15 @@ while Play:
     for i in range(0,count):
         pesosus.append(Person(str(i),persData,10))
     
-    tagg = Objects.objects.keys()
+    if (len(Objects.objects)) > 300:
+        tagg = list(Objects.objects.keys())
+        rand.shuffle(tagg)
+        tagg = tagg[300:]
+        for tag in tagg:
+            if tag in Objects.objects:
+                del Objects.objects[tag]
 
-    
+   
     print(len(Objects.objects))
             
     game.refresh_screen(10) # Обновляет экран 
