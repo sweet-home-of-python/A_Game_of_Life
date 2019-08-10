@@ -33,7 +33,7 @@ Play = True # Запуск
 drawer = Drawer()
 
 
-for i in range(0,20):
+for i in range(0,10):
     pesosus.append(Person(str(i),persData,10))
 
 count = 1000
@@ -71,16 +71,16 @@ while Play:
     for i in range(0,count):
         pesosus.append(Person(str(i),persData,10))
     
-    if (len(Objects.objects)) > 300:
+    if (len(Objects.objects)) > 100:
         tagg = list(Objects.objects.keys())
         rand.shuffle(tagg)
-        tagg = tagg[300:]
+        tagg = tagg[100:]
         for tag in tagg:
             if tag in Objects.objects:
                 del Objects.objects[tag]
 
    
-    print(len(Objects.objects))
+
             
     game.refresh_screen(10) # Обновляет экран 
 

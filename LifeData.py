@@ -1,7 +1,7 @@
 import random as rand
 import pygame
 import time 
-from miscLife import*
+#from miscLife import*
 
 class Game():
     colors = {'black': (0,0,0),
@@ -60,11 +60,14 @@ class Person():
     def __init__(self, name,persData,size):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
-        self.name = self.nameos()
+        self.name = name
 
         # Особенности
         self.gender = self.random_gender()
         self.age = 1 # возраст
+
+        self.name = self.nameos()
+        print(self.name)
         # параметры организма
         self.health = 100
         self.starve = 0
@@ -81,6 +84,7 @@ class Person():
 
 
         Objects.get_object(self)
+        
     
     def random_gender(self):
         genders = ['male','female']
@@ -145,11 +149,18 @@ class Person():
         if self.starve > 30:
             self.health -=1
 
-         
+    def namegen(self):
+        with open('data/m_names.txt') as f:
+            m_names = f.read().splitlines()
+        with open('data/f_names.txt') as f:
+            f_names = f.read().splitlines()
+        return m_names,f_names    
+
+   
     def nameos(self):
+        m_names,f_names = self.namegen()
         if self.gender == "male":
-            mn = rand.choice(m_names)
-            return self.name == mn
+            return rand.choice(m_names)
         
 
     def life_control(self):
@@ -218,4 +229,6 @@ def cell_visualisator(screen,cells,radius):
     for cell in cells:
         pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
         i+=1
+
+
     
