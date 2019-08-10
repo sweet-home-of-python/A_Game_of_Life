@@ -57,13 +57,13 @@ class Objects():
     
 
 class Person():
-    def __init__(self, name,persData,size,gender):
+    def __init__(self, name,persData,size):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
 
         # Особенности
-        self.gender = gender
+        self.gender = self.random_gender()
         self.age = 1 # возраст
         # параметры организма
         self.health = 100
@@ -75,9 +75,9 @@ class Person():
         
 
         # Местоположение
-        self.position = 500,300 # НУжно переделать
+        self.position = self.random_position() # НУжно переделать
         self.pos_in_cell = 0
-        self.step = 20
+        self.step = 10
 
 
         Objects.get_object(self)
@@ -85,6 +85,12 @@ class Person():
     def random_gender(self):
         genders = ['male','female']
         return rand.choice(genders)
+
+    def random_position(self):
+        pos = []
+        for i in range(300,400,10):
+            pos.append(i)
+        return rand.choice(pos),rand.choice(pos)
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
@@ -107,26 +113,27 @@ class Person():
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
+        step = 1
         x,y = self.position
         if move == 1: 
-            x-=10
+            x-=self.step
         if move == 2:
-           x-=10 
+           x-=self.step 
            y+=self.step
         if move == 3: 
-            y+=10
+            y+=self.step
         if move == 4: 
-            x+=10
+            x+=self.step
             y+=self.step
         if move == 5: 
-            x+=10
+            x+=self.step
         if move == 6: 
-            x+=10
+            x+=self.step
             y-=self.step
         if move == 7: 
-            y-=10
+            y-=self.step
         if move == 8: 
-            x-=10 
+            x-=self.step 
             y-=self.step
         self.starve +=1
         self.position = x,y

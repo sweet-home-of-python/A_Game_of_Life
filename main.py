@@ -1,7 +1,7 @@
 
 
 
-from LifeData import *
+from lifeData import *
 
 
 game = Game() # Класс настроек
@@ -25,9 +25,6 @@ pygame.display.set_caption('A Game of Life')
 persData = cells
 
 
-pers = Person("Yarik", persData,10,"1")
-pers2 = Person("Ya", persData,10, "2")
-
 pesosus = []
 
 
@@ -35,32 +32,48 @@ Play = True # Запуск
 
 drawer = Drawer()
 
-print(Objects.objects)
 
-i =x =0
+for i in range(0,20):
+    pesosus.append(Person(str(i),persData,10))
 
-    
-
-
+count = 1000
 
 while Play:
     sc.fill(game.colors['white'])# Заливка
+
+
 
     cell_visualisator(sc,cells.cells,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
     
     drawer.drawObjects(Objects.objects,sc)
     
-    
+    count = 0
+    tag_list = []
+
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
-        while x != 10:
-            if Objects.objects[0].position == Objects.objects[0].position:
-                if pers.gender != pers2.gender:
-                    pesosus.append(Person(str(i),persData,10,"loh"))
-        #Objects.objects[obj_tag].find_cells_pos()
-        #cells.cells[Objects.objects[obj_tag].pos_in_cell].fill = True
+        for obj_tag_2 in Objects.objects:
+            if Objects.objects[obj_tag].position == Objects.objects[obj_tag_2].position:
+                if Objects.objects[obj_tag].gender != Objects.objects[obj_tag_2].gender:
+                    count +=1
+                elif Objects.objects[obj_tag].gender == Objects.objects[obj_tag_2].gender and obj_tag != obj_tag_2:
+                    tag_list.append(obj_tag)
+
+
+    for tag in tag_list:
+        if tag in Objects.objects:
+            del Objects.objects[tag]
     
+
+
+        
+     
+    for i in range(0,count):
+        pesosus.append(Person(str(i),persData,10))
+    tagg = []
+    for tag
     
+    print(len(Objects.objects))
             
     game.refresh_screen(10) # Обновляет экран 
 
