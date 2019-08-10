@@ -93,7 +93,12 @@ class Person():
         if self.health <=0:
             self.alive = False
     
-    
+    def find_cells_pos(self):
+        '''Ищет позицию перса в ячейках. Возможно нужно вынести в отдельную вспомогательную функцию'''
+        cells = self.cells.cells
+        for cel in cells:
+            if self.position == cells[cel].pos:
+                self.pos_in_cell = cel
 
     def movenment_new(self,cells):
         '''Обработчик движения'''
@@ -156,10 +161,6 @@ class Person():
          # Я не знаю как правильно это написать, создание нового перса, и еще
          # не уверен что удаление персов тоже сработает
 
-
-    def __str__(self):
-        return 'Имя класса: {}\nИмя: {}\nПол: {}\nПозиция: {}\nПозиция в ячейке: {}'.format(self.class_name, self.name, self.gender, self.position, self.pos_in_cell)
-
 class Food():
     def __init__(self):
         
@@ -191,14 +192,6 @@ class Drawer():
         return  position, radius
 
 # Вспомогательные функции
-
-
-def find_cells_pos(pers,cells):
-        '''Ищет позицию перса в ячейках. Возможно нужно вынести в отдельную вспомогательную функцию'''
-        for cel in cells.cells:
-            if pers.position == cells.cells[cel].pos:
-                pers.pos_in_cell = cel
-
 
 # Временные функции
 

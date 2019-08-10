@@ -54,9 +54,9 @@ while Play:
     for obj_tag in Objects.objects: # обработка всех объектов
         Objects.objects[obj_tag].movenment()
         while x != 10:
-            if Objects.objects[0].position == Objects.objects[0].position
+            if Objects.objects[0].position == Objects.objects[0].position:
                 if pers.gender != pers2.gender:
-                 pesosus.append(Person(str(i),persData,10,"loh"))
+                    pesosus.append(Person(str(i),persData,10,"loh"))
         #Objects.objects[obj_tag].find_cells_pos()
         #cells.cells[Objects.objects[obj_tag].pos_in_cell].fill = True
     
