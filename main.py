@@ -22,7 +22,7 @@ pygame.display.set_caption('A Game of Life')
 #celsc = pygame.display.set_mode(game.resolution, display=0)
 #clock = pygame.time.Clock()
 
-persData = cells
+#persData = cells
 
 
 pesosus = []
@@ -34,7 +34,7 @@ drawer = Drawer()
 
 
 for i in range(0,10):
-    pesosus.append(Person(str(i),persData,10))
+    pesosus.append(Person(str(i)))
 
 count = 1000
 
@@ -50,14 +50,19 @@ while Play:
     count = 0
     tag_list = []
 
-    for obj_tag in Objects.objects: # обработка всех объектов
-        Objects.objects[obj_tag].movenment()
-        for obj_tag_2 in Objects.objects:
-            if Objects.objects[obj_tag].position == Objects.objects[obj_tag_2].position:
-                if Objects.objects[obj_tag].gender != Objects.objects[obj_tag_2].gender:
-                    count +=1
-                elif Objects.objects[obj_tag].gender == Objects.objects[obj_tag_2].gender and obj_tag != obj_tag_2:
-                    tag_list.append(obj_tag)
+    for key1 in Objects.objects: # обработка всех объектов
+
+        Objects.objects[key1].movenment()
+
+
+
+        for key2 in Objects.objects:
+            if key1 in Objects.objects or key2 in Objects.objects:
+                if Objects.objects[key1].position == Objects.objects[key2].position:
+                    if Objects.objects[key1].gender != Objects.objects[key2].gender:
+                        count +=1
+                    elif Objects.objects[key1].gender == Objects.objects[key2].gender and key1 != key2:
+                        tag_list.append(key1)
 
 
     for tag in tag_list:
@@ -69,12 +74,12 @@ while Play:
         
      
     for i in range(0,count):
-        pesosus.append(Person(str(i),persData,10))
+        pesosus.append(Person(str(i)))
     
-    if (len(Objects.objects)) > 100:
+    if (len(Objects.objects)) > 50:
         tagg = list(Objects.objects.keys())
         rand.shuffle(tagg)
-        tagg = tagg[100:]
+        tagg = tagg[50:]
         for tag in tagg:
             if tag in Objects.objects:
                 del Objects.objects[tag]
