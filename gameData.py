@@ -87,7 +87,7 @@ class Person():
         self.name = self.nameos()
         
         # параметры организма
-        self.health = 10
+        self.health = 100
         self.starve = 0
         self.alive = True
         self.eat = False
@@ -139,8 +139,9 @@ class Person():
             self.alive = False
     
     def death(self):
-        del Objects.objects[self.class_name]
-        #del self
+        if self.alive == False:
+            del self
+        
     
 
 
