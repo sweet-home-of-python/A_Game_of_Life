@@ -65,7 +65,7 @@ class Person():
     def __init__(self, name):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
-        self.name = self.nameos()
+        
 
         # Особенности
         
