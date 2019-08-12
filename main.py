@@ -1,7 +1,7 @@
 
 
 
-from lifeData import *
+from gameData import *
 
 
 game = Game() # Класс настроек
