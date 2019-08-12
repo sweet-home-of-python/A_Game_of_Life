@@ -22,17 +22,19 @@ class Game():
         pygame.display.update()
 
 class Cells():
-    def __init__(self,cells_size):
+    def __init__(self,cell_size,sells_size):
         '''Создает сетку. Принимает в виде аргумента шаг.'''
         self.cells = {}
-        self.cells_size = cells_size
+        self.cell_size = cell_size
+        self.cells_size = sells_size
 
+        self.cells_generator()
 
-    def cells_generator(self,size):
-        height, width = size
+    def cells_generator(self):
+        height, width = self.cells_size
         i = 0
-        for h in range(0,height,self.cells_size):
-            for w in range(0,width,self.cells_size):
+        for h in range(0,height,self.cell_size):
+            for w in range(0,width,self.cell_size):
                 self.cells[i] = Cell((h,w))
                 i+=1
 
@@ -79,6 +81,8 @@ class Person():
         #self.cells = persData
         
 
+        self.sensetive = 1 # Чуствительность
+
         # Местоположение
         self.position = self.random_position() # НУжно переделать
         self.pos_in_cell = 0
@@ -101,8 +105,10 @@ class Person():
             return Game.colors['blue']
 
     def random_position(self):
+        '''Возвращает случайную позицию с учетом сетки'''
         pos = []
-        for i in range(300,400,10):
+        x,y = Game.resolution
+        for i in range(0,y,10):
             pos.append(i)
         return rand.choice(pos),rand.choice(pos)
 
@@ -121,10 +127,8 @@ class Person():
 
     def movenment_new(self,cells):
         '''Обработчик движения'''
-        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
-        move = rand.choice(move_direction)
-        x,y = self.position
-        pos
+        
+
         
         Cells.cells[i].fill = True
 
@@ -234,12 +238,14 @@ class Drawer():
         return  position, radius
 
 # Вспомогательные функции
-def find_cells_pos(self):
-    '''Ищет позицию перса в ячейках. Возможно нужно вынести в отдельную вспомогательную функцию'''
-    cells = self.cells.cells
+def find_cell_pos(cells,person):
+    '''Ищет позицию перса в ячейках.'''
+    cells = person.cells.cells
     for cel in cells:
-        if self.position == cells[cel].pos:
-            self.pos_in_cell = cel
+        if person.position == cells[cel].pos:
+            return cel
+
+
 # Временные функции
 
 def cell_visualisator(screen,cells,radius):

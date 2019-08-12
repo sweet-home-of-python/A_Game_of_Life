@@ -9,8 +9,8 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-cells = Cells(20) # Создаем сетку
-cells.cells_generator(game.resolution)
+cells = Cells(20,game.resolution) # Создаем сетку
+cells.cells_generator()
 #######################################
 
 
