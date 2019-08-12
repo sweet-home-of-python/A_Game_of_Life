@@ -87,7 +87,7 @@ while Play:
    
 
             
-    game.refresh_screen(10) # Обновляет экран 
+    game.refresh_screen(15) # Обновляет экран 
 
     
 

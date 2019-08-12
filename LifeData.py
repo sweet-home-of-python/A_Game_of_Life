@@ -31,6 +31,7 @@ class Cells():
         self.cells_generator()
 
     def cells_generator(self):
+        '''Яенерирует ячейки'''
         height, width = self.cells_size
         i = 0
         for h in range(0,height,self.cell_size):
