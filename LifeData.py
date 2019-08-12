@@ -41,6 +41,7 @@ class Cell():
         #self.size = 10
         self.pos = pos
         self.fill = False
+        self.object = None
     
 class Objects():
     objects = {}
@@ -57,7 +58,7 @@ class Objects():
     
 
 class Person():
-    def __init__(self, name,persData,size):
+    def __init__(self, name):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         self.name = name
@@ -69,12 +70,13 @@ class Person():
         self.name = self.nameos()
         print(self.name)
         # параметры организма
-        self.health = 100
+        self.health = 10
         self.starve = 0
         self.alive = True
         self.eat = False
-        self.size = size #размер ебаного организма
-        self.cells = persData
+        self.size = 10 #размер ебаного организма
+        self.color = self.gender_color()
+        #self.cells = persData
         
 
         # Местоположение
@@ -87,8 +89,16 @@ class Person():
         
     
     def random_gender(self):
+        '''Генерирует пол особи'''
         genders = ['male','female']
         return rand.choice(genders)
+
+    def gender_color(self):
+        '''Генерирует цвет особи в зависимости от пола'''
+        if self.gender == 'male':
+            return Game.colors['black']
+        if self.gender == 'female':
+            return Game.colors['blue']
 
     def random_position(self):
         pos = []
@@ -102,6 +112,10 @@ class Person():
             self.alive = False
         if self.health <=0:
             self.alive = False
+    
+    def death(self):
+        del Objects.objects[self.class_name]
+        #del self
     
 
 
@@ -140,8 +154,11 @@ class Person():
             x-=self.step 
             y-=self.step
         self.starve +=1
+        self.golod()
+        
         self.position = x,y
         
+
     def sensor(self):
         pass
 
@@ -158,10 +175,12 @@ class Person():
 
    
     def nameos(self):
+        '''Возвращает имя из списка имен.'''
         m_names,f_names = self.namegen()
         if self.gender == "male":
             return rand.choice(m_names)
-        
+        if self.gender == "female":
+            return rand.choice(f_names)
 
     def life_control(self):
        
@@ -189,7 +208,7 @@ class Food():
         
         self.position = 1,1
 
-class Spawner():
+class Spawner(object):
     '''Спавнит объекты'''
     pass
 
@@ -200,7 +219,7 @@ class Drawer():
     def drawObjects(self,objects,screen):
         '''Рисует принятый объект(ы)'''
         for object in objects:
-            pygame.draw.rect(screen, Game.colors['black'], self.pos_to_draw_rect(objects[object].position))
+            pygame.draw.rect(screen, objects[object].color, self.pos_to_draw_rect(objects[object].position))
             self.size = objects[object].size #приблуда чтобы по размеру отрисовывались
 
     def pos_to_draw_rect(self, position):
