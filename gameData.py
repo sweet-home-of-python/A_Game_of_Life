@@ -68,7 +68,7 @@ class Person():
         self.name = self.nameos()
 
         # Особенности
-        self.gender = self.random_gender()
+        
         self.age = 1 # возраст
 
         self.name = self.nameos()
@@ -79,6 +79,7 @@ class Person():
         self.alive = True
         self.eat = False
         self.size = 10 #размер ебаного организма
+        self.gender = self.random_gender()
         self.color = self.gender_color()
         #self.cells = persData
         
