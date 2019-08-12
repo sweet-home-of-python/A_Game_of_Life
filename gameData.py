@@ -17,7 +17,7 @@ class Game():
 
     #Глобальные переменные
 
-    self.names = self.namegen()
+    #names = namegen()
     
         
     def refresh_screen(self,fps):
@@ -27,7 +27,7 @@ class Game():
         pygame.display.update()
 
 
-    def namegen(self):
+    def namegen():
         with open('data/m_names.txt') as f:
             m_names = f.read().splitlines()
         with open('data/f_names.txt') as f:
@@ -84,10 +84,10 @@ class Person():
         
         self.age = 1 # возраст
         self.gender = self.random_gender()
-        self.name = self.nameos()
+        self.name = 'хир'#self.nameos()
         
         # параметры организма
-        self.health = 100
+        self.health = 10
         self.starve = 0
         self.alive = True
         self.eat = False
@@ -140,7 +140,7 @@ class Person():
     
     def death(self):
         if self.alive == False:
-            del self
+            del Objects.objects[self.class_name]
         
     
 
@@ -180,6 +180,8 @@ class Person():
         self.starve +=1
         self.golod()
         
+        self.death_reason()
+
         self.position = x,y
         
 
@@ -187,7 +189,7 @@ class Person():
         pass
 
     def golod(self):
-        if self.starve > 30:
+        if self.starve > 1:
             self.health -=1
 
    

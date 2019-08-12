@@ -51,7 +51,7 @@ while Play:
 
     for key1 in Objects.objects: # обработка всех объектов
 
-        Objects.objects[key1].pos_in_cell = find_cell_pos(cells,Objects.objects[key1])
+        #Objects.objects[key1].pos_in_cell = find_cell_pos(cells,Objects.objects[key1])
 
         Objects.objects[key1].movenment()
         Objects.objects[key1].death()
