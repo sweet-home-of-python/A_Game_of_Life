@@ -13,6 +13,11 @@ class Game():
     resolution = 1200,600  # размер экрана
 
     fps_controller = pygame.time.Clock() # Системная надстройка
+
+
+    #Глобальные переменные
+
+    self.names = self.namegen()
     
         
     def refresh_screen(self,fps):
@@ -20,6 +25,14 @@ class Game():
         #pygame.display.flip()
         self.fps_controller.tick(fps)
         pygame.display.update()
+
+
+    def namegen(self):
+        with open('data/m_names.txt') as f:
+            m_names = f.read().splitlines()
+        with open('data/f_names.txt') as f:
+            f_names = f.read().splitlines()
+        return m_names,f_names 
 
 class Cells():
     def __init__(self,cell_size,sells_size):
@@ -72,7 +85,7 @@ class Person():
         self.age = 1 # возраст
         self.gender = self.random_gender()
         self.name = self.nameos()
-        print(self.name)
+        
         # параметры организма
         self.health = 10
         self.starve = 0
@@ -92,8 +105,11 @@ class Person():
         self.step = 10
 
 
+        
         Objects.get_object(self)
         
+        print(str(self))
+
     
     def random_gender(self):
         '''Генерирует пол особи'''
@@ -173,17 +189,10 @@ class Person():
         if self.starve > 30:
             self.health -=1
 
-    def namegen(self):
-        with open('data/m_names.txt') as f:
-            m_names = f.read().splitlines()
-        with open('data/f_names.txt') as f:
-            f_names = f.read().splitlines()
-        return m_names,f_names    
-
    
     def nameos(self):
         '''Возвращает имя из списка имен.'''
-        m_names,f_names = self.namegen()
+        m_names,f_names = Game.names
         if self.gender == "male":
             return rand.choice(m_names)
         if self.gender == "female":
