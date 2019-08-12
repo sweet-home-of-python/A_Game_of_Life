@@ -12,7 +12,7 @@ class Game():
 
     resolution = 1200,600  # размер экрана
 
-    fps_controller = pygame.time.Clock()
+    fps_controller = pygame.time.Clock() # Системная надстройка
     
         
     def refresh_screen(self,fps):
@@ -40,6 +40,7 @@ class Cells():
                 i+=1
 
 class Cell():
+    '''Объект ячейки'''
     def __init__(self, pos):
         #self.size = 10
         self.pos = pos
