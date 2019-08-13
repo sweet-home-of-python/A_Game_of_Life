@@ -216,17 +216,6 @@ class Person():
        
         print('incest with  boys')
 
-    def face_to_face(self,person2):
-        '''Обработка встречи, если одинаковый пол то махач, если разный то чпоканье'''
-        if self.gender == person2.gender:
-            if self.health > person2.health:
-                del person2
-            if self.health < person2.health:
-                del self
-        #else:
-           #person = Person(self.name + person2.name)
-         # Я не знаю как правильно это написать, создание нового перса, и еще
-         # не уверен что удаление персов тоже сработает
 
     def __str__(self):
         return 'Имя класса: {}\nИмя: {}\nПол: {}\nПозиция: {}\nПозиция в ячейке: {}'.format(self.class_name, self.name, self.gender, self.position, self.pos_in_cell)
@@ -238,7 +227,7 @@ class Food():
         
         self.position = 1,1
 
-class Spawner(object):
+class Spawner(object_type,count):
     '''Спавнит объекты'''
     pass
 
