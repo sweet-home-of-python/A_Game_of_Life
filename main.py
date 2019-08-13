@@ -33,7 +33,7 @@ Play = True # Запуск
 drawer = Drawer()
 
 
-for i in range(0,10):
+for i in range(0,20):
     pesosus.append(Person(str(i)))
 
 count = 1000
@@ -65,7 +65,8 @@ while Play:
             if key1 in Objects.objects or key2 in Objects.objects:
                 if Objects.objects[key1].position == Objects.objects[key2].position:
                     if Objects.objects[key1].gender != Objects.objects[key2].gender:
-                        count +=1
+                        if  Objects.objects[key1].age > 18:
+                            count +=1
                     elif Objects.objects[key1].gender == Objects.objects[key2].gender and key1 != key2:
                         tag_list.append(key1)
 

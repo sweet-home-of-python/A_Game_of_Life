@@ -88,6 +88,7 @@ class Person():
         
         # параметры организма
         self.health = 100
+        
         self.starve = 0
         self.alive = True
         self.eat = False
@@ -181,7 +182,7 @@ class Person():
             y-=self.step
         self.starve +=1
         self.golod()
-        
+        self.age +=1
         self.death_reason()
 
         self.position = x,y
@@ -191,7 +192,7 @@ class Person():
         pass
 
     def golod(self):
-        if self.starve > 1:
+        if self.starve > 30:
             self.health -=1
 
    
