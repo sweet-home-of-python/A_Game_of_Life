@@ -42,7 +42,6 @@ while Play:
     sc.fill(game.colors['white'])# Заливка
 
 
-
     cell_visualisator(sc,cells.cells,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
     
     drawer.drawObjects(Objects.objects,sc)
@@ -51,6 +50,8 @@ while Play:
     tag_list = []
 
     for key1 in Objects.objects: # обработка всех объектов
+
+        #Objects.objects[key1].pos_in_cell = find_cell_pos(cells,Objects.objects[key1])
 
         Objects.objects[key1].movenment()
         if  Objects.objects[key1].death()==True:
