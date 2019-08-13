@@ -2,7 +2,6 @@ import random as rand
 import pygame
 import time 
 #from miscLife import*
-
 class Game():
     colors = {'black': (0,0,0),
                     'white':(255,255,255),
@@ -134,9 +133,9 @@ class Person():
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
-        if self.age >= 80:
+        if self.age >= 40:
             self.alive = False
-        if self.health <=0:
+        if self.health <= 0:
             self.alive = False
     
     def death(self):
@@ -175,7 +174,7 @@ class Person():
                 x+=self.step
                 y+=self.step
         if move == 5: 
-            if x <1200:
+            if x < 1200:
                 x+=self.step
         if move == 6: 
             if x < 1200 and y > 5:
@@ -200,7 +199,7 @@ class Person():
         pass
 
     def golod(self):
-        if self.life_time ==10:
+        if self.life_time == 10:
             self.age +=1
             self.life_time = 0
         #if self.starve > 100:
@@ -230,9 +229,16 @@ class Food():
         
         self.position = 1,1
 
-class Spawner(object_type,count):
-    '''Спавнит объекты'''
-    pass
+class Spawner():
+    '''спавнит объекты'''
+    spawnlist = []
+    pos = 10,10
+    def SpawnObject(count = 1, type = 'person'):
+        if type == 'person':
+            pass
+        if type == 'huerson':
+            print('sosi huy')
+        
 
 
 class Drawer():
@@ -265,10 +271,9 @@ def find_cell_pos(cells,person):
 
 
 # Временные функции
-
 def cell_visualisator(screen,cells,radius):
     '''Отображает ячейки'''
-    i =1
+    i = 1
     for cell in cells:
         pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
         i+=1

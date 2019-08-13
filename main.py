@@ -79,7 +79,7 @@ while Play:
     for i in range(0,count):
         pesosus.append(Person(str(i)))
     
-    per_limit = 100
+    per_limit = 300
 
     if (len(Objects.objects)) > per_limit:
         tagg = list(Objects.objects.keys())
