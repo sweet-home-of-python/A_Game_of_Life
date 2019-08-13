@@ -58,9 +58,6 @@ while Play:
             tag_list.append(key1)
 
 
-        
-
-
         for key2 in Objects.objects:
             if key1 in Objects.objects or key2 in Objects.objects:
                 if Objects.objects[key1].position == Objects.objects[key2].position:
@@ -82,10 +79,12 @@ while Play:
     for i in range(0,count):
         pesosus.append(Person(str(i)))
     
-    if (len(Objects.objects)) > 50:
+    per_limit = 100
+
+    if (len(Objects.objects)) > per_limit:
         tagg = list(Objects.objects.keys())
         rand.shuffle(tagg)
-        tagg = tagg[50:]
+        tagg = tagg[per_limit:]
         for tag in tagg:
             if tag in Objects.objects:
                 del Objects.objects[tag]
