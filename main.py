@@ -53,7 +53,10 @@ while Play:
     for key1 in Objects.objects: # обработка всех объектов
 
         Objects.objects[key1].movenment()
-        Objects.objects[key1].death()
+        if  Objects.objects[key1].death()==True:
+            del Objects.objects[key1]
+
+        
 
 
         for key2 in Objects.objects:
