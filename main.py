@@ -33,7 +33,7 @@ Play = True # Запуск
 drawer = Drawer()
 
 
-for i in range(0,100):
+for i in range(0,20):
     pesosus.append(Person(str(i)))
 
 count = 1000

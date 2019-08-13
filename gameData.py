@@ -87,7 +87,7 @@ class Person():
         self.name = 'хир'#self.nameos()
         
         # параметры организма
-        self.health = 100000
+        self.health = 100
         
         self.starve = 0
         self.alive = True
@@ -104,7 +104,7 @@ class Person():
         self.position = self.random_position() # НУжно переделать
         self.pos_in_cell = 0
         self.step = 10
-
+        self.life_time = 0
 
         
         Objects.get_object(self)
@@ -134,7 +134,7 @@ class Person():
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
-        if self.age >= 800:
+        if self.age >= 80:
             self.alive = False
         if self.health <=0:
             self.alive = False
@@ -190,7 +190,7 @@ class Person():
                 y-=self.step
         self.starve +=1
         self.golod()
-        self.age +=1
+        self.life_time +=1
         self.death_reason()
 
         self.position = x,y
@@ -200,8 +200,11 @@ class Person():
         pass
 
     def golod(self):
-        if self.starve > 100:
-            self.health -=1
+        if self.life_time ==10:
+            self.age +=1
+            self.life_time = 0
+        #if self.starve > 100:
+            #self.health -=1
 
    
     def nameos(self):
