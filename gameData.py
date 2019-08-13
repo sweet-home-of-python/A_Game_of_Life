@@ -87,7 +87,7 @@ class Person():
         self.name = 'хир'#self.nameos()
         
         # параметры организма
-        self.health = 100
+        self.health = 100000
         
         self.starve = 0
         self.alive = True
@@ -134,7 +134,7 @@ class Person():
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
-        if self.age >= 80:
+        if self.age >= 800:
             self.alive = False
         if self.health <=0:
             self.alive = False
@@ -160,26 +160,34 @@ class Person():
         move = rand.choice(move_direction)
         step = 1
         x,y = self.position
-        if move == 1: 
-            x-=self.step
+        if move == 1:
+            if x > 5:
+                x-=self.step
         if move == 2:
-           x-=self.step 
-           y+=self.step
+            if x > 5 and y < 600:
+               x-=self.step 
+               y+=self.step
         if move == 3: 
-            y+=self.step
+            if y < 600:
+             y+=self.step
         if move == 4: 
-            x+=self.step
-            y+=self.step
+            if x < 1200 and y < 600:
+                x+=self.step
+                y+=self.step
         if move == 5: 
-            x+=self.step
+            if x <1200:
+                x+=self.step
         if move == 6: 
-            x+=self.step
-            y-=self.step
-        if move == 7: 
-            y-=self.step
+            if x < 1200 and y > 5:
+                x+=self.step
+                y-=self.step
+        if move == 7:
+            if y > 5:
+                y-=self.step
         if move == 8: 
-            x-=self.step 
-            y-=self.step
+            if x > 5 and y > 5:
+                x-=self.step 
+                y-=self.step
         self.starve +=1
         self.golod()
         self.age +=1
@@ -192,7 +200,7 @@ class Person():
         pass
 
     def golod(self):
-        if self.starve > 30:
+        if self.starve > 100:
             self.health -=1
 
    
