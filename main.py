@@ -55,7 +55,8 @@ while Play:
 
         Objects.objects[key1].movenment()
         if  Objects.objects[key1].death()==True:
-            del Objects.objects[key1]
+            tag_list.append(key1)
+
 
         
 

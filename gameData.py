@@ -87,7 +87,7 @@ class Person():
         self.name = 'хир'#self.nameos()
         
         # параметры организма
-        self.health = 10
+        self.health = 100
         self.starve = 0
         self.alive = True
         self.eat = False
