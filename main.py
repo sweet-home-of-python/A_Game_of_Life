@@ -2,7 +2,7 @@
 
 
 from gameData import *
-
+from pygame.locals import *
 
 game = Game() # Класс настроек
 
@@ -37,8 +37,10 @@ for i in range(0,20):
     pesosus.append(Person(str(i)))
 
 count = 1000
-
-while Play:
+Play = 1
+while Play ==1:
+    running = True
+    
     sc.fill(game.colors['white'])# Заливка
 
 
@@ -91,9 +93,14 @@ while Play:
 
    
 
-            
-    game.refresh_screen(15) # Обновляет экран 
 
+   
+    for event in pygame.event.get():
+        if event.type==QUIT:
+            Play = 0
+                  
+    game.refresh_screen(15) # Обновляет экран 
+pygame.quit ()
     
 
 
