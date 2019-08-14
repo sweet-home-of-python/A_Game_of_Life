@@ -37,10 +37,12 @@ class Cells():
     def __init__(self,cell_size,sells_size):
         '''Создает сетку. Принимает в виде аргумента шаг.'''
         self.cells = {}
-        self.cell_size = cell_size
-        self.cells_size = sells_size
+        self.cell_size = cell_size # Расстояние между точками
+
+
+        self.cells_size = sells_size # Размер самой сетки
         height, width = self.cells_size
-        self.cells_len = height/cell_size
+        self.cells_len = height//cell_size
 
         self.cells_generator()
 
@@ -102,7 +104,7 @@ class Person():
         self.sensetive = 1 # Чуствительность
 
         # Местоположение
-        self.position = self.random_position() # НУжно переделать
+        self.position = 0,0 # НУжно переделать
         self.pos_in_cell = 0
         self.step = 10
         self.life_time = 0
@@ -129,7 +131,7 @@ class Person():
         '''Возвращает случайную позицию с учетом сетки'''
         pos = []
         x,y = Game.resolution
-        for i in range(0,y,10):
+        for i in range(0,y,20):
             pos.append(i)
         return rand.choice(pos),rand.choice(pos)
 
@@ -149,33 +151,36 @@ class Person():
     
 
 
-    def movenment_new(self,cells):
+    def movenment(self,cells):
         '''Обработчик движения'''
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
+       # move_direction = [3] # Направления дввижения.  1 - Вверх
         move = rand.choice(move_direction)
         
-        cell_len = cells.cell_len
-
+        cell_len = cells.cells_len/2
+        new_pos_in_cell = self.pos_in_cell
         x,y = self.position
         if move == 1:
-            self.pos_in_cell = self.pos_in_cell - 1
+            new_pos_in_cell = self.pos_in_cell - 1
         if move == 2:
-            self.pos_in_cell = self.pos_in_cell - cell_len - 1
+            new_pos_in_cell = self.pos_in_cell - cell_len - 1
         if move == 3: 
-            self.pos_in_cell = self.pos_in_cell - cell_len
+            new_pos_in_cell = self.pos_in_cell - cell_len
         if move == 4:
-            self.pos_in_cell = self.pos_in_cell - cell_len + 1
+            new_pos_in_cell = self.pos_in_cell - cell_len + 1
         if move == 5:
-            self.pos_in_cell = self.pos_in_cell + 1
+            new_pos_in_cell = self.pos_in_cell + 1
         if move == 6:
-            self.pos_in_cell = self.pos_in_cell + cell_len + 1
+            new_pos_in_cell = self.pos_in_cell + cell_len + 1
         if move == 7:
-            self.pos_in_cell = self.pos_in_cell + cell_len
+            new_pos_in_cell = self.pos_in_cell + cell_len
         if move == 8: 
-            self.pos_in_cell = self.pos_in_cell + cell_len - 1    
+            new_pos_in_cell = self.pos_in_cell + cell_len - 1    
         
+        if new_pos_in_cell in cells.cells:
+            self.pos_in_cell = new_pos_in_cell
 
-    def movenment(self):
+    def movenment_old(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
         move = rand.choice(move_direction)
         step = 1
@@ -285,7 +290,7 @@ class Drawer():
 # Вспомогательные функции
 def find_cell_pos(cells,person):
     '''Ищет позицию перса в ячейках.'''
-    cells = person.cells.cells
+    cells = cells.cells
     for cel in cells:
         if person.position == cells[cel].pos:
             return cel

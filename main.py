@@ -9,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-cells = Cells(20,game.resolution) # Создаем сетку
+cells = Cells(30,game.resolution) # Создаем сетку
 cells.cells_generator()
 #######################################
 
@@ -33,7 +33,7 @@ Play = True # Запуск
 drawer = Drawer()
 
 
-for i in range(0,20):
+for i in range(0,50):
     pesosus.append(Person(str(i)))
 
 count = 1000
@@ -50,12 +50,20 @@ while Play ==1:
     
     count = 0
     tag_list = []
+    
+    # Поиск позиции в ячейках
+    for key in Objects.objects:
+        Objects.objects[key].pos_in_cell = find_cell_pos(cells,Objects.objects[key])
+
 
     for key1 in Objects.objects: # обработка всех объектов
 
-        #Objects.objects[key1].pos_in_cell = find_cell_pos(cells,Objects.objects[key1])
+        
+        Objects.objects[key1].movenment(cells)
+        if Objects.objects[key1].pos_in_cell in cells.cells:
+            Objects.objects[key1].position = cells.cells[Objects.objects[key1].pos_in_cell].pos
 
-        Objects.objects[key1].movenment()
+
         if  Objects.objects[key1].death()==True:
             tag_list.append(key1)
 
