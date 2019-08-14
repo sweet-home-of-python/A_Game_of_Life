@@ -9,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-cells = Cells(30,game.resolution) # Создаем сетку
+cells = Cells(20,game.resolution) # Создаем сетку
 cells.cells_generator()
 #######################################
 
@@ -33,13 +33,13 @@ Play = True # Запуск
 drawer = Drawer()
 
 
-for i in range(0,50):
-    pesosus.append(Person(str(i)))
+#for i in range(0,10):
+#    pesosus.append(Person(str(i)))
 
 count = 1000
-Play = 1
-while Play ==1:
-    running = True
+Play = True
+while Play:
+
     
     sc.fill(game.colors['white'])# Заливка
 
@@ -49,7 +49,7 @@ while Play ==1:
     drawer.drawObjects(Objects.objects,sc)
     
     count = 0
-    tag_list = []
+    dead_list = []
     
     # Поиск позиции в ячейках
     for key in Objects.objects:
@@ -65,31 +65,37 @@ while Play ==1:
 
 
         if  Objects.objects[key1].death()==True:
-            tag_list.append(key1)
+            dead_list.append(key1)
 
 
         for key2 in Objects.objects:
-            if key1 in Objects.objects or key2 in Objects.objects:
+             if key1 != key2:
                 if Objects.objects[key1].position == Objects.objects[key2].position:
                     if Objects.objects[key1].gender != Objects.objects[key2].gender:
                         if  Objects.objects[key1].age > 1:
                             count +=1
-                    elif Objects.objects[key1].gender == Objects.objects[key2].gender and key1 != key2:
-                        tag_list.append(key1)
+                    elif Objects.objects[key1].gender == Objects.objects[key2].gender:
+                        dead_list.append(key1)
 
 
-    for tag in tag_list:
+
+    # Убирает список персов
+    for tag in dead_list:
         if tag in Objects.objects:
             del Objects.objects[tag]
     
 
 
-        
-     
-    for i in range(0,count):
-        pesosus.append(Person(str(i)))
+    if count>0:
+        for co in range(0,count):
+            Spawner.SpawnObject(random_cell_pos(cells)) # Спавнит пидорков 
+
+
+
+    #for i in range(0,count):
+    #    pesosus.append(Person(str(i)))
     
-    per_limit = 300
+    per_limit = 100
 
     if (len(Objects.objects)) > per_limit:
         tagg = list(Objects.objects.keys())
@@ -100,14 +106,22 @@ while Play ==1:
                 del Objects.objects[tag]
 
    
+    game.refresh_screen(15) # Обновляет экран 
 
+    keys = pygame.key.get_pressed()
 
-   
     for event in pygame.event.get():
         if event.type==QUIT:
-            Play = 0
-                  
-    game.refresh_screen(15) # Обновляет экран 
+            Play = False
+        if keys[pygame.K_ESCAPE]:
+            Play = False
+            pygame.quit()
+        
+        if keys[pygame.K_q]:
+            Spawner.SpawnObject(random_cell_pos(cells))
+
+                    
+
 pygame.quit ()
     
 

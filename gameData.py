@@ -16,7 +16,7 @@ class Game():
 
     #Глобальные переменные
 
-    #names = namegen()
+    
     
         
     def refresh_screen(self,fps):
@@ -32,6 +32,9 @@ class Game():
         with open('data/f_names.txt') as f:
             f_names = f.read().splitlines()
         return m_names,f_names 
+
+
+
 
 class Cells():
     def __init__(self,cell_size,sells_size):
@@ -78,16 +81,16 @@ class Objects():
     
 
 class Person():
-    def __init__(self, name):
+    def __init__(self,position):
         self.class_name = 'Person' + str(Objects.statistic['personObject'])
         self.class_tag = 'personObject'
         
 
         # Особенности
         
-        self.age = 1 # возраст
+        self.age = 10 # возраст
         self.gender = self.random_gender()
-        self.name = 'хир'#self.nameos()
+        self.name = self.nameos()
         
         # параметры организма
         self.health = 100
@@ -104,15 +107,15 @@ class Person():
         self.sensetive = 1 # Чуствительность
 
         # Местоположение
-        self.position = 0,0 # НУжно переделать
+        self.position = position # НУжно переделать
         self.pos_in_cell = 0
         self.step = 10
         self.life_time = 0
 
         
-        Objects.get_object(self)
+
         
-        print(str(self))
+        #print(str(self))
 
     
     def random_gender(self):
@@ -127,7 +130,7 @@ class Person():
         if self.gender == 'female':
             return Game.colors['blue']
 
-    def random_position(self):
+    def random_position_old(self):
         '''Возвращает случайную позицию с учетом сетки'''
         pos = []
         x,y = Game.resolution
@@ -234,7 +237,8 @@ class Person():
    
     def nameos(self):
         '''Возвращает имя из списка имен.'''
-        m_names,f_names = Game.names
+
+        m_names,f_names = Game.namegen()
         if self.gender == "male":
             return rand.choice(m_names)
         if self.gender == "female":
@@ -258,13 +262,12 @@ class Food():
 class Spawner():
     '''спавнит объекты'''
     spawnlist = []
-    pos = 10,10
-    def SpawnObject(count = 1, type = 'person'):
+    def SpawnObject(position = 1, type = 'person'):
         if type == 'person':
-            pass
+            Objects.get_object(Person(position))
         if type == 'huerson':
             print('sosi huy')
-        
+        print(len(Objects.objects)) 
 
 
 class Drawer():
@@ -294,6 +297,11 @@ def find_cell_pos(cells,person):
     for cel in cells:
         if person.position == cells[cel].pos:
             return cel
+
+def random_cell_pos(cells):
+    cell_list = cells.cells
+    cel = rand.choice(cell_list)
+    return cel.pos
 
 
 # Временные функции
