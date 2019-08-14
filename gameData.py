@@ -39,6 +39,8 @@ class Cells():
         self.cells = {}
         self.cell_size = cell_size
         self.cells_size = sells_size
+        height, width = self.cells_size
+        self.cells_len = height/cell_size
 
         self.cells_generator()
 
@@ -149,10 +151,29 @@ class Person():
 
     def movenment_new(self,cells):
         '''Обработчик движения'''
+        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
+        move = rand.choice(move_direction)
         
+        cell_len = cells.cell_len
 
+        x,y = self.position
+        if move == 1:
+            self.pos_in_cell = self.pos_in_cell - 1
+        if move == 2:
+            self.pos_in_cell = self.pos_in_cell - cell_len - 1
+        if move == 3: 
+            self.pos_in_cell = self.pos_in_cell - cell_len
+        if move == 4:
+            self.pos_in_cell = self.pos_in_cell - cell_len + 1
+        if move == 5:
+            self.pos_in_cell = self.pos_in_cell + 1
+        if move == 6:
+            self.pos_in_cell = self.pos_in_cell + cell_len + 1
+        if move == 7:
+            self.pos_in_cell = self.pos_in_cell + cell_len
+        if move == 8: 
+            self.pos_in_cell = self.pos_in_cell + cell_len - 1    
         
-        Cells.cells[i].fill = True
 
     def movenment(self):
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
