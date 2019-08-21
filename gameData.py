@@ -47,16 +47,26 @@ class Cells():
         height, width = self.cells_size
         self.cells_len = height//cell_size
 
+
+        #limints
+        self.up_limits = []
+        self.down_limits = []
+
+
         self.cells_generator()
+
 
     def cells_generator(self):
         '''Яенерирует ячейки'''
         height, width = self.cells_size
         i = 0
         for h in range(0,height,self.cell_size):
+            self.up_limits.append(i)
+            self.down_limits.append(i + (width//self.cell_size)-1)
             for w in range(0,width,self.cell_size):
                 self.cells[i] = Cell((h,w))
                 i+=1
+
 
 class Cell():
     '''Объект ячейки'''
@@ -157,28 +167,35 @@ class Person():
     def movenment(self,cells):
         '''Обработчик движения'''
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
-       # move_direction = [3] # Направления дввижения.  1 - Вверх
+        #move_direction = [1] # Направления дввижения.  1 - Вверх
         move = rand.choice(move_direction)
         
         cell_len = cells.cells_len/2
+        
         new_pos_in_cell = self.pos_in_cell
         x,y = self.position
         if move == 1:
-            new_pos_in_cell = self.pos_in_cell - 1
+            if self.pos_in_cell not in cells.up_limits:
+                new_pos_in_cell = self.pos_in_cell - 1
         if move == 2:
-            new_pos_in_cell = self.pos_in_cell - cell_len - 1
+            if self.pos_in_cell not in cells.up_limits:
+                new_pos_in_cell = self.pos_in_cell - cell_len - 1
         if move == 3: 
             new_pos_in_cell = self.pos_in_cell - cell_len
         if move == 4:
-            new_pos_in_cell = self.pos_in_cell - cell_len + 1
+            if self.pos_in_cell not in cells.down_limits:
+                new_pos_in_cell = self.pos_in_cell - cell_len + 1
         if move == 5:
-            new_pos_in_cell = self.pos_in_cell + 1
+            if self.pos_in_cell not in cells.down_limits:
+                new_pos_in_cell = self.pos_in_cell + 1
         if move == 6:
-            new_pos_in_cell = self.pos_in_cell + cell_len + 1
+            if self.pos_in_cell not in cells.down_limits:
+                new_pos_in_cell = self.pos_in_cell + cell_len + 1
         if move == 7:
             new_pos_in_cell = self.pos_in_cell + cell_len
-        if move == 8: 
-            new_pos_in_cell = self.pos_in_cell + cell_len - 1    
+        if move == 8:
+            if self.pos_in_cell not in cells.up_limits:
+                new_pos_in_cell = self.pos_in_cell + cell_len - 1    
         
         if new_pos_in_cell in cells.cells:
             self.pos_in_cell = new_pos_in_cell
@@ -224,7 +241,7 @@ class Person():
         self.position = x,y
         
 
-    def sensor(self):
+    def sensor(self,cells):
         pass
 
     def golod(self):
