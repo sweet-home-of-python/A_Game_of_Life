@@ -109,7 +109,6 @@ class Person():
         # Местоположение
         self.position = position # НУжно переделать
         self.pos_in_cell = 0
-        self.step = 10
         self.life_time = 0
 
         
@@ -183,45 +182,7 @@ class Person():
         if new_pos_in_cell in cells.cells:
             self.pos_in_cell = new_pos_in_cell
 
-    def movenment_old(self):
-        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
-        move = rand.choice(move_direction)
-        step = 1
-        x,y = self.position
-        if move == 1:
-            if x > 5:
-                x-=self.step
-        if move == 2:
-            if x > 5 and y < 600:
-               x-=self.step 
-               y+=self.step
-        if move == 3: 
-            if y < 600:
-             y+=self.step
-        if move == 4: 
-            if x < 1200 and y < 600:
-                x+=self.step
-                y+=self.step
-        if move == 5: 
-            if x < 1200:
-                x+=self.step
-        if move == 6: 
-            if x < 1200 and y > 5:
-                x+=self.step
-                y-=self.step
-        if move == 7:
-            if y > 5:
-                y-=self.step
-        if move == 8: 
-            if x > 5 and y > 5:
-                x-=self.step 
-                y-=self.step
-        self.starve +=1
-        self.golod()
-        self.life_time +=1
-        self.death_reason()
-
-        self.position = x,y
+  
         
 
     def sensor(self):
