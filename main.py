@@ -39,7 +39,6 @@ drawer = Drawer()
 count = 1000
 Play = True
 while Play:
-
     
     sc.fill(game.colors['white'])# Заливка
 
@@ -61,7 +60,11 @@ while Play:
         
         Objects.objects[key1].movenment(cells)
         if Objects.objects[key1].pos_in_cell in cells.cells:
+
             Objects.objects[key1].position = cells.cells[Objects.objects[key1].pos_in_cell].pos
+
+
+            cells.cells[Objects.objects[key1].pos_in_cell].object = Objects.objects[key1];
 
 
         if  Objects.objects[key1].death()==True:
@@ -92,8 +95,6 @@ while Play:
 
 
 
-    #for i in range(0,count):
-    #    pesosus.append(Person(str(i)))
     
     per_limit = 100
 
@@ -106,6 +107,12 @@ while Play:
                 del Objects.objects[tag]
 
    
+    for cell in cells.cells:
+        cells.cells[cell].object = None
+
+
+
+
     game.refresh_screen(15) # Обновляет экран 
 
     keys = pygame.key.get_pressed()
