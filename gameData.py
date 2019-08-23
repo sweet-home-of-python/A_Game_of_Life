@@ -245,7 +245,7 @@ class Spawner():
             Objects.get_object(Person(position))
         if type == 'huerson':
             print('sosi huy')
-        print(len(Objects.objects)) 
+       
 
 
 class Drawer():

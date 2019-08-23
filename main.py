@@ -9,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-cells = Cells(10,game.resolution) # Создаем сетку
+cells = Cells(40,game.resolution) # Создаем сетку
 cells.cells_generator()
 #######################################
 
@@ -49,6 +49,8 @@ while Play:
     
     count = 0
     dead_list = []
+    male_list = []
+    female_list = []
     
     # Поиск позиции в ячейках
     for key in Objects.objects:
@@ -57,7 +59,12 @@ while Play:
 
     for key1 in Objects.objects: # обработка всех объектов
 
-        
+        if   Objects.objects[key1].gender == "male":
+            male_list.append(key1)
+            
+        if   Objects.objects[key1].gender == "female":
+            female_list.append(key1)
+         
         Objects.objects[key1].movenment(cells)
         if Objects.objects[key1].pos_in_cell in cells.cells:
 
@@ -96,7 +103,7 @@ while Play:
 
 
     
-    per_limit = 100
+    per_limit = 1000
 
     if (len(Objects.objects)) > per_limit:
         tagg = list(Objects.objects.keys())
@@ -126,7 +133,7 @@ while Play:
         
         if keys[pygame.K_q]:
             Spawner.SpawnObject(random_cell_pos(cells))
-
+    print(len(male_list)," ",len(female_list))   
                     
 
 pygame.quit ()
