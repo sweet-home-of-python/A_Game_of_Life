@@ -251,6 +251,8 @@ class Spawner():
 class Drawer():
     def __init__(self):
         self.size = 10
+
+
     def drawObjects(self,objects,screen):
         '''Рисует принятый объект(ы)'''
         for object in objects:
