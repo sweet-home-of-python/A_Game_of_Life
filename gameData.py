@@ -97,13 +97,13 @@ class Person():
         
 
         # Особенности
-        
+        self.coconut = 0
         self.age = 10 # возраст
         self.gender = self.random_gender()
         self.name = self.nameos()
         
         # параметры организма
-        self.health = 100
+        self.health = 10
         
         self.starve = 0
         self.alive = True
@@ -196,21 +196,24 @@ class Person():
             if self.pos_in_cell not in cells.up_limits:
                 new_pos_in_cell = self.pos_in_cell + cell_len - 1    
         
+        
         if new_pos_in_cell in cells.cells:
             self.pos_in_cell = new_pos_in_cell
 
-  
-        
+        self.coconut +=1
+        if self.coconut == 20:
+            self.starve +=1
+            self.golod()
+            self.death_reason()
+            self.coconut = 0
 
     def sensor(self,cells):
         pass
 
     def golod(self):
-        if self.life_time == 10:
-            self.age +=1
-            self.life_time = 0
-        #if self.starve > 100:
-            #self.health -=1
+        if self.starve > 1:
+            self.health -=1
+            
 
    
     def nameos(self):

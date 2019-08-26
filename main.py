@@ -58,7 +58,7 @@ while Play:
 
 
     for key1 in Objects.objects: # обработка всех объектов
-
+        
         if   Objects.objects[key1].gender == "male":
             male_list.append(key1)
             
@@ -103,7 +103,7 @@ while Play:
 
 
     
-    per_limit = 1000
+    per_limit = 100
 
     if (len(Objects.objects)) > per_limit:
         tagg = list(Objects.objects.keys())
@@ -120,7 +120,7 @@ while Play:
 
 
 
-    game.refresh_screen(15) # Обновляет экран 
+    game.refresh_screen(30) # Обновляет экран 
 
     keys = pygame.key.get_pressed()
 
