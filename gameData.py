@@ -179,18 +179,21 @@ class Person():
         move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - Вверх
         #move_direction = [1] # Направления дввижения.  1 - Вверх
         move = rand.choice(move_direction)
-
+        
+        temp_pos = self.position
         vert_pos = self.around_vert()
+                
+        if move in [8,1,2]:
+            if vert_pos[0] not in self.grid.up_limits:
+                temp_pos = vert_pos[move]
+        elif move in [4,5,6]:
+            if vert_pos[0] not in self.grid.down_limits:
+                temp_pos = vert_pos[move]
+        else: 
+            temp_pos = vert_pos[move]
 
-        if move in self.grid.vertices:
-            if move in [8,1,2]:
-                if vert_pos[0] not in self.grid.up_limits:
-                    self.position = vert_pos[move]
-            elif move in [4,5,6]:
-                if vert_pos[0] not in self.grid.down_limits:
-                    self.position = vert_pos[move]
-            else: 
-                self.position = vert_pos[move]
+        if temp_pos in self.grid.vertices:
+            self.position = temp_pos
 
   
     def around_vert(self):
