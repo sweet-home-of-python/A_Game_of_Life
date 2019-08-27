@@ -36,47 +36,56 @@ class Game():
 
 
 
-class Cells():
-    def __init__(self,cell_size,sells_size):
+class Grid():
+    def __init__(self, grid_step, grid_size):
         '''Создает сетку. Принимает в виде аргумента шаг.'''
-        self.cells = {}
-        self.cell_size = cell_size # Расстояние между точками
+        
+        self.vertices = {} # Вершины всех ячеек
+        
+        
+        
+        self.grid_step = grid_step # Расстояние между точками
+        self.grid_size = grid_size # Размер сетки (int высота и ширина)
 
 
-        self.cells_size = sells_size # Размер самой сетки
-        height, width = self.cells_size
-        self.cells_len = height//cell_size
+        height, width = self.grid_size
+        self.vert_len = height//grid_step # Длинна сетки
 
 
-        #limints
+        #limints для ограничения движения
         self.up_limits = []
         self.down_limits = []
 
 
-        self.cells_generator()
+        self.grid_generator() # генерирует сетку присоздании экземпляра
 
 
-    def cells_generator(self):
+    def grid_generator(self):
         '''Яенерирует ячейки'''
-        height, width = self.cells_size
+        height, width = self.grid_size
         i = 0
-        for h in range(0,height,self.cell_size):
+        for h in range(0,height,self.grid_step):
             self.up_limits.append(i)
-            self.down_limits.append(i + (width//self.cell_size)-1)
-            for w in range(0,width,self.cell_size):
-                self.cells[i] = Cell((h,w))
+            self.down_limits.append(i + (width//self.grid_step)-1)
+            for w in range(0,width,self.grid_step):
+                self.vertices[i] = Vertex(i,(h,w))
                 i+=1
 
 
-class Cell():
+    def random_vertex(self):
+        vert = rand.choice(self.vertices)
+        return vert.index
+
+
+class Vertex():
     '''Объект ячейки'''
-    def __init__(self, pos):
+    def __init__(self,index, pos):
         #self.size = 10
+        self.index = index
         self.pos = pos
-        self.fill = False
         self.object = None
     
-class Objects():
+class Object():
     objects = {}
 
     statistic = {'personObject':0,
@@ -85,16 +94,19 @@ class Objects():
                  }
 
     def get_object(obj):
-        Objects.objects[obj.class_name] = obj
-        Objects.statistic[obj.class_tag] = Objects.statistic[obj.class_tag] + 1
+        Object.objects[obj.class_name] = obj
+        Object.statistic[obj.class_tag] = Object.statistic[obj.class_tag] + 1
     
     
 
 class Person():
-    def __init__(self,position):
-        self.class_name = 'Person' + str(Objects.statistic['personObject'])
+    def __init__(self,grid,position):
+        self.class_name = 'Person' + str(Object.statistic['personObject'])
         self.class_tag = 'personObject'
         
+
+        self.grid = grid
+
 
         # Особенности
         
@@ -107,7 +119,11 @@ class Person():
         
         self.starve = 0
         self.alive = True
+
+
+
         self.eat = False
+
         self.size = 10 #размер ебаного организма
         
         self.color = self.gender_color()
@@ -117,8 +133,8 @@ class Person():
         self.sensetive = 1 # Чуствительность
 
         # Местоположение
-        self.position = position # НУжно переделать
-        self.pos_in_cell = 0
+        self.position = position # теперь замена posincell
+
         self.life_time = 0
 
         
@@ -139,13 +155,8 @@ class Person():
         if self.gender == 'female':
             return Game.colors['blue']
 
-    def random_position_old(self):
-        '''Возвращает случайную позицию с учетом сетки'''
-        pos = []
-        x,y = Game.resolution
-        for i in range(0,y,20):
-            pos.append(i)
-        return rand.choice(pos),rand.choice(pos)
+    def random_position(self,vertices):
+        pass
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
@@ -163,46 +174,46 @@ class Person():
     
 
 
-    def movenment(self,cells):
+    def movenment(self):
         '''Обработчик движения'''
-        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - лево
+        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - Вверх
         #move_direction = [1] # Направления дввижения.  1 - Вверх
         move = rand.choice(move_direction)
-        
-        cell_len = cells.cells_len/2
-        
-        new_pos_in_cell = self.pos_in_cell
-        x,y = self.position
-        if move == 1:
-            if self.pos_in_cell not in cells.up_limits:
-                new_pos_in_cell = self.pos_in_cell - 1
-        if move == 2:
-            if self.pos_in_cell not in cells.up_limits:
-                new_pos_in_cell = self.pos_in_cell - cell_len - 1
-        if move == 3: 
-            new_pos_in_cell = self.pos_in_cell - cell_len
-        if move == 4:
-            if self.pos_in_cell not in cells.down_limits:
-                new_pos_in_cell = self.pos_in_cell - cell_len + 1
-        if move == 5:
-            if self.pos_in_cell not in cells.down_limits:
-                new_pos_in_cell = self.pos_in_cell + 1
-        if move == 6:
-            if self.pos_in_cell not in cells.down_limits:
-                new_pos_in_cell = self.pos_in_cell + cell_len + 1
-        if move == 7:
-            new_pos_in_cell = self.pos_in_cell + cell_len
-        if move == 8:
-            if self.pos_in_cell not in cells.up_limits:
-                new_pos_in_cell = self.pos_in_cell + cell_len - 1    
-        
-        if new_pos_in_cell in cells.cells:
-            self.pos_in_cell = new_pos_in_cell
+
+        vert_pos = self.around_vert()
+
+        if move in self.grid.vertices:
+            if move in [8,1,2]:
+                if vert_pos[0] not in self.grid.up_limits:
+                    self.position = vert_pos[move]
+            elif move in [4,5,6]:
+                if vert_pos[0] not in self.grid.down_limits:
+                    self.position = vert_pos[move]
+            else: 
+                self.position = vert_pos[move]
 
   
-        
+    def around_vert(self):
+        '''Получает индексы ячеек вокруг песра'''
 
-    def sensor(self,cells):
+        vert_len = self.grid.vert_len/2
+
+        vert_pos = [] # 0 - текущий индекс 1 - верх
+
+        vert_pos.append(self.position)
+        vert_pos.append(self.position - 1)
+        vert_pos.append(self.position - vert_len - 1)
+        vert_pos.append(self.position - vert_len)
+        vert_pos.append(self.position - vert_len + 1)
+        vert_pos.append(self.position + 1)
+        vert_pos.append(self.position + vert_len + 1)
+        vert_pos.append(self.position + vert_len)
+        vert_pos.append(self.position + vert_len - 1 )
+
+        return vert_pos
+
+    def sensor(self,grid):
+        '''Сканирует пространство вокруг объекта'''
         pass
 
     def golod(self):
@@ -228,7 +239,7 @@ class Person():
 
 
     def __str__(self):
-        return 'Имя класса: {}\nИмя: {}\nПол: {}\nПозиция: {}\nПозиция в ячейке: {}'.format(self.class_name, self.name, self.gender, self.position, self.pos_in_cell)
+        return '\nИмя класса: {}\nИмя: {}\nПол: {}\nПозиция: {}\nПозиция в ячейке: {}'.format(self.class_name, self.name, self.gender, self.position, self.position)
 
 
 
@@ -240,9 +251,9 @@ class Food():
 class Spawner():
     '''спавнит объекты'''
     spawnlist = []
-    def SpawnObject(position = 1, type = 'person'):
+    def SpawnObject(grid,position = 1, type = 'person'):
         if type == 'person':
-            Objects.get_object(Person(position))
+            Object.get_object(Person(grid, position))
         if type == 'huerson':
             print('sosi huy')
        
@@ -253,35 +264,17 @@ class Drawer():
         self.size = 10
 
 
-    def drawObjects(self,objects,screen):
+    def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
-        for object in objects:
-            pygame.draw.rect(screen, objects[object].color, self.pos_to_draw_rect(objects[object].position))
-            self.size = objects[object].size #приблуда чтобы по размеру отрисовывались
+        pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
+            #self.size = objects[object].size #приблуда чтобы по размеру отрисовывались
 
     def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
-            
             x,y = position
             return  x - self.size, y - self.size, self.size * 2, self.size * 2
-    
-    def pos_to_draw_circ(self,position):
-        '''Преобразует центральные координаты в координаты для круга'''
-        radius = 5
-        return  position, radius
 
 # Вспомогательные функции
-def find_cell_pos(cells,person):
-    '''Ищет позицию перса в ячейках.'''
-    cells = cells.cells
-    for cel in cells:
-        if person.position == cells[cel].pos:
-            return cel
-
-def random_cell_pos(cells):
-    cell_list = cells.cells
-    cel = rand.choice(cell_list)
-    return cel.pos
 
 
 # Временные функции
