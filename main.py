@@ -53,20 +53,20 @@ while Play:
     male_list = []
     female_list = []
 
+    ss = grid.random_vertex()
     
+    ## Очистка ячеек
+    #for vert in grid.filling_vertlist:
+    #    grid.vertices[vert].object = None
     
-    # Очистка ячеек
-    for vert in filling_vertlist:
-        grid.vertices[vert].object = None
-    
-    filling_vertlist = []
+    #grid.filling_vertlist = []
 
-    for key in Object.objects:
-        key_pos = Object.objects[key].position
+    #for key in Object.objects:
+    #    key_pos = Object.objects[key].position
        
-        grid.vertices[key_pos].object = Object.objects[key]
+    #    grid.vertices[key_pos].object = Object.objects[key]
         
-        filling_vertlist.append(key_pos)
+    #    grid.filling_vertlist.append(key_pos)
 
         
         
