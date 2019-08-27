@@ -97,7 +97,7 @@ class Object():
         Object.objects[obj.class_name] = obj
         Object.statistic[obj.class_tag] = Object.statistic[obj.class_tag] + 1
     
-    
+
 
 class Person():
     def __init__(self,grid,position):
@@ -109,7 +109,7 @@ class Person():
 
 
         # Особенности
-        
+        self.pohudel = 0
         self.age = 10 # возраст
         self.gender = self.random_gender()
         self.name = self.nameos()
@@ -139,13 +139,26 @@ class Person():
 
         
 
-        
-        #print(str(self))
+    def sobachya_zizn(self):
+        if self.gender == "sobaka":
+            self.health =1000000000000000
+            self.starve = 10
+            self.name = "Pes"
+            self.size = 3
+    def udav_ne_lubit_pisku_v_rot(self):
+        self.sobachya_zizn()
+        self.movenment()
+        self.pohudel +=1
+        if self.pohudel >10:
+            self.starve +=1
+            self.pohudel = 0
+        self.golodnii_udav_doedaet_sobaku()
+        self.death_reason()
+        self.death()
 
-    
     def random_gender(self):
         '''Генерирует пол особи'''
-        genders = ['male','female']
+        genders = ['male','female','sobaka']
         return rand.choice(genders)
 
     def gender_color(self):
@@ -154,6 +167,8 @@ class Person():
             return Game.colors['black']
         if self.gender == 'female':
             return Game.colors['blue']
+        if self.gender == 'sobaka':
+            return Game.colors['red']
 
     def random_position(self,vertices):
         pass
@@ -192,7 +207,7 @@ class Person():
         else: 
             temp_pos = vert_pos[move]
 
-        if temp_pos in self.grid.vertices:
+        if temp_pos > 0 and temp_pos < len(self.grid.vertices):
             self.position = temp_pos
 
   
@@ -219,12 +234,9 @@ class Person():
         '''Сканирует пространство вокруг объекта'''
         pass
 
-    def golod(self):
-        if self.life_time == 10:
-            self.age +=1
-            self.life_time = 0
-        #if self.starve > 100:
-            #self.health -=1
+    def golodnii_udav_doedaet_sobaku(self):
+        if self.starve > 10:
+            self.health -=1
 
    
     def nameos(self):
@@ -247,9 +259,14 @@ class Person():
 
 
 class Food():
-    def __init__(self):
-        
-        self.position = 1,1
+    def __init__(self,grid):
+       self.position = grid.random_vertex()
+       self.food_types = {'myaso': 100,'yabloko':15,'banan':25,'bulka hleba':80,'pivas':50,'steik':70,'olivie':70,'saurma':100,'adrenalin_rush':200,'kuba_libra':150}
+       self.random_food = rand.choise(food_types)
+
+       
+
+
 
 class Spawner():
     '''спавнит объекты'''
@@ -259,18 +276,22 @@ class Spawner():
             Object.get_object(Person(grid, position))
         if type == 'huerson':
             print('sosi huy')
-       
+        if type == 'food':
+            pass
+
 
 
 class Drawer():
     def __init__(self):
-        self.size = 10
-
+        
+        self.size = 5
+        
 
     def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
+        self.size = object.size #приблуда чтобы по размеру отрисовывались
         pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
-            #self.size = objects[object].size #приблуда чтобы по размеру отрисовывались
+        self.size = object.size #приблуда чтобы по размеру отрисовывались
 
     def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''

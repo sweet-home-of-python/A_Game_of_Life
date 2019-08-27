@@ -9,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-grid = Grid(40,game.resolution) # Создаем сетку
+grid = Grid(10,game.resolution) # Создаем сетку
 #######################################
 
 
@@ -44,7 +44,7 @@ while Play:
     
     sc.fill(game.colors['white'])# Заливка
 
-    cell_visualisator(sc,grid.vertices,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
+    #cell_visualisator(sc,grid.vertices,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
     
     
    # Вспомогтельные переменные 
@@ -80,7 +80,7 @@ while Play:
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
 
 
-        Object.objects[key].movenment() # Обработчик движения
+        Object.objects[key].udav_ne_lubit_pisku_v_rot() # Обработчик движения
 
 
 
@@ -104,7 +104,7 @@ while Play:
     
 
     
-    per_limit = 1000
+    per_limit = 10000000000000
 
     if (len(Object.objects)) > per_limit:
         tagg = list(Object.objects.keys())
@@ -129,8 +129,9 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,1):
+            for i in range(0,100):
                 Spawner.SpawnObject(grid,grid.random_vertex())
+        
           
 
 pygame.quit ()
