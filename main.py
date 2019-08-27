@@ -9,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-grid = Grid(40,game.resolution) # Создаем сетку
+grid = Grid(30,game.resolution) # Создаем сетку
 #######################################
 
 
@@ -61,13 +61,7 @@ while Play:
     
     filling_vertlist = []
 
-
-
-
-        #------------ Обработка всех объектов --------------#
-
     for key in Object.objects:
-        
         key_pos = Object.objects[key].position
        
         grid.vertices[key_pos].object = Object.objects[key]
@@ -76,7 +70,11 @@ while Play:
 
         
         
+        #------------ Обработка всех объектов --------------#
+
+    for key in Object.objects:
         
+     
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
 
 
@@ -117,7 +115,7 @@ while Play:
 
     print(len(Object.objects))
 
-    game.refresh_screen(15) # Обновляет экран 
+    game.refresh_screen(20) # Обновляет экран 
 
     keys = pygame.key.get_pressed()
 
@@ -129,7 +127,7 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,1):
+            for i in range(0,100):
                 Spawner.SpawnObject(grid,grid.random_vertex())
           
 

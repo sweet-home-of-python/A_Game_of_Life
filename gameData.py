@@ -176,30 +176,24 @@ class Person():
 
     def movenment(self):
         '''Обработчик движения'''
-        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - Вверх
-        #move_direction = [1] # Направления дввижения.  1 - Вверх
-        move = rand.choice(move_direction)
-        
-        temp_pos = self.position
-        vert_pos = self.around_vert()
-                
-        if move in [8,1,2]:
-            if vert_pos[0] not in self.grid.up_limits:
-                temp_pos = vert_pos[move]
-        elif move in [4,5,6]:
-            if vert_pos[0] not in self.grid.down_limits:
-                temp_pos = vert_pos[move]
-        else: 
-            temp_pos = vert_pos[move]
 
-        if temp_pos in self.grid.vertices:
-            self.position = temp_pos
+        vertFill, vertNone = self.sensor()
+
+        if len(vertNone) > 0:
+            move = rand.choice(vertNone)
+        else:
+            move = self.position
+
+
+        if move > 0 and move < len(self.grid.vertices):
+            if move not in self.grid.up_limits and move not in self.grid.down_limits:
+                self.position = move
 
   
     def around_vert(self):
         '''Получает индексы ячеек вокруг песра'''
 
-        vert_len = self.grid.vert_len/2
+        vert_len = int(self.grid.vert_len/2)
 
         vert_pos = [] # 0 - текущий индекс 1 - верх
 
@@ -215,9 +209,23 @@ class Person():
 
         return vert_pos
 
-    def sensor(self,grid):
-        '''Сканирует пространство вокруг объекта'''
-        pass
+    def sensor(self):
+        '''Сканирует пространство вокруг объекта и возвращает индексы пустых и заполненных вершин'''
+        vert_pos = self.around_vert()
+
+        vertFill = []
+        vertNone = []
+
+        for vert in vert_pos:
+            if vert in self.grid.vertices:
+                if self.grid.vertices[vert].object == None:
+                    vertNone.append(vert)
+                else:
+                    vertFill.append(vert)
+
+        return vertFill, vertNone
+
+
 
     def golod(self):
         if self.life_time == 10:
