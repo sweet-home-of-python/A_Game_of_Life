@@ -42,34 +42,24 @@ class Grid():
         
         self.vertices = {} # Вершины всех ячеек
         
-        
+        self.filling_vertlist = []
         
         self.grid_step = grid_step # Расстояние между точками
         self.grid_size = grid_size # Размер сетки (int высота и ширина)
 
 
-        height, width = self.grid_size
-        self.vert_len = height//grid_step # Длинна сетки
-
-
-        #limints для ограничения движения
-        self.up_limits = []
-        self.down_limits = []
-
-
         self.grid_generator() # генерирует сетку присоздании экземпляра
-
 
     def grid_generator(self):
         '''Яенерирует ячейки'''
         height, width = self.grid_size
-        i = 0
-        for h in range(0,height,self.grid_step):
-            self.up_limits.append(i)
-            self.down_limits.append(i + (width//self.grid_step)-1)
-            for w in range(0,width,self.grid_step):
-                self.vertices[i] = Vertex(i,(h,w))
-                i+=1
+        iX = 0
+        iY = 0
+        for w in range(0,width,self.grid_step):
+            for h in range(0,height,self.grid_step):
+                self.vertices[iX] = Vertex((iX,iY),(h,w))
+                iX+=1
+            iY+=1
 
 
     def random_vertex(self):
@@ -79,7 +69,7 @@ class Grid():
 
 class Vertex():
     '''Объект ячейки'''
-    def __init__(self,index, pos):
+    def __init__(self, index, pos):
         #self.size = 10
         self.index = index
         self.pos = pos
@@ -137,7 +127,6 @@ class Person():
 
         self.life_time = 0
 
-        
 
         
         #print(str(self))
@@ -155,9 +144,6 @@ class Person():
         if self.gender == 'female':
             return Game.colors['blue']
 
-    def random_position(self,vertices):
-        pass
-
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
         if self.age >= 40:
@@ -171,7 +157,24 @@ class Person():
         else:
             return False
         
-    
+    def old_move(self):
+        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - Вверх
+        move = rand.choice(move_direction)
+
+        temp_pos = self.position
+        vert_pos = self.around_vert()
+
+        if move in [8,1,2]:
+            if vert_pos[0] not in self.grid.up_limits:
+                temp_pos = vert_pos[move]
+        elif move in [4,5,6]:
+            if vert_pos[0] not in self.grid.down_limits:
+                temp_pos = vert_pos[move]
+        else: 
+            temp_pos = vert_pos[move]
+
+        if temp_pos in self.grid.vertices:
+            self.position = temp_pos
 
 
     def movenment(self):
@@ -193,19 +196,22 @@ class Person():
     def around_vert(self):
         '''Получает индексы ячеек вокруг песра'''
 
-        vert_len = int(self.grid.vert_len/2)
+        vert_len = int(self.grid.grid_size//self.grid.grid_step)
 
         vert_pos = [] # 0 - текущий индекс 1 - верх
 
-        vert_pos.append(self.position)
-        vert_pos.append(self.position - 1)
-        vert_pos.append(self.position - vert_len - 1)
-        vert_pos.append(self.position - vert_len)
-        vert_pos.append(self.position - vert_len + 1)
-        vert_pos.append(self.position + 1)
-        vert_pos.append(self.position + vert_len + 1)
-        vert_pos.append(self.position + vert_len)
-        vert_pos.append(self.position + vert_len - 1 )
+        X,Y = self.position
+
+        vert_pos.append(self.position) # центр
+
+        vert_pos.append(X,Y - vert_len)
+        vert_pos.append(X + 1, Y - vert_len)
+        vert_pos.append(X + 1,Y)
+        vert_pos.append(X + 1,Y + vert_len)
+        vert_pos.append(X,Y + vert_len)
+        vert_pos.append(X - 1,Y + vert_len)
+        vert_pos.append(X - 1,Y)
+        vert_pos.append(X - 1,Y - vert_len)
 
         return vert_pos
 
@@ -262,7 +268,7 @@ class Food():
 class Spawner():
     '''спавнит объекты'''
     spawnlist = []
-    def SpawnObject(grid,position = 1, type = 'person'):
+    def SpawnObject(grid,position=(0,0), type='person'):
         if type == 'person':
             Object.get_object(Person(grid, position))
         if type == 'huerson':
@@ -278,7 +284,8 @@ class Drawer():
     def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
         pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
-            #self.size = objects[object].size #приблуда чтобы по размеру отрисовывались
+            #self.size = objects[object].size #приблуда чтобы по размеру
+            #отрисовывались
 
     def pos_to_draw_rect(self, position):
             '''Преобразует центральные координаты в координаты для квадрата'''
