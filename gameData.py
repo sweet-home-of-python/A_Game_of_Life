@@ -207,26 +207,29 @@ class Person():
         else:
             move = self.position
 
+        if move in self.grid.vertices:  # Нужно оптимизировать
+            self.position = move
+
   
     def around_vert(self):
         '''Получает индексы ячеек вокруг песра'''
 
         #vert_len = int(self.grid.grid_size//self.grid.grid_step)
-        vert_len = self.grid.grid_size[0] // self.grid.grid_step
+        #vert_len = self.grid.grid_size[0] // self.grid.grid_step
         vert_pos = [] # 0 - текущий индекс 1 - верх
 
         X,Y = self.position
 
         vert_pos.append(self.position) # центр
 
-        vert_pos.append((X,Y - vert_len))
-        vert_pos.append((X + 1, Y - vert_len))
+        vert_pos.append((X,Y - 1))
+        vert_pos.append((X + 1, Y - 1))
         vert_pos.append((X + 1,Y))
-        vert_pos.append((X + 1,Y + vert_len))
-        vert_pos.append((X,Y + vert_len))
-        vert_pos.append((X - 1,Y + vert_len))
+        vert_pos.append((X + 1,Y + 1))
+        vert_pos.append((X,Y + 1))
+        vert_pos.append((X - 1,Y + 1))
         vert_pos.append((X - 1,Y))
-        vert_pos.append((X - 1,Y - vert_len))
+        vert_pos.append((X - 1,Y - 1))
 
         return vert_pos
 
