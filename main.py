@@ -9,7 +9,7 @@ game = Game() # Класс настроек
 
 
 ######### Инициализация сетки #########
-grid = Grid(10,game.resolution) # Создаем сетку
+grid = Grid(100,game.resolution) # Создаем сетку
 #######################################
 
 
@@ -65,7 +65,7 @@ while Play:
     
     grid.filling_vertlist = []
 
-    for key in Object.objects:
+    for key in Object.objects:                      # Заполняет вершины объектами
         key_pos = Object.objects[key].position
        
         grid.vertices[key_pos].object = Object.objects[key]
@@ -82,10 +82,7 @@ while Play:
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
 
 
-        Object.objects[key].udav_ne_lubit_pisku_v_rot() # Обработчик движения
-
-
-
+        Object.objects[key].udav_ne_lubit_pisku_v_rot() # Обработчик действий
 
 
 
@@ -94,9 +91,6 @@ while Play:
         if  Object.objects[key].alive == False:
             dead_list.append(key)
 
-
-
-    
 
 
     # Убирает список персов
@@ -117,7 +111,7 @@ while Play:
                 del Object.objects[tag]
 
 
-    print(len(Object.objects))
+   
 
     game.refresh_screen(20) # Обновляет экран 
 
@@ -131,9 +125,10 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,100):
+            for i in range(0,1):
                 Spawner.SpawnObject(grid,grid.random_vertex())
-        
+           
+            print(len(Object.objects))
           
 
 pygame.quit ()

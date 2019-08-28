@@ -139,9 +139,11 @@ class Person():
             self.starve = 10
             self.name = "Pes"
             self.size = 3
+
     def udav_ne_lubit_pisku_v_rot(self):
         self.sobachya_zizn()
         self.movenment()
+        self.sex_or_die()
         self.pohudel +=1
         if self.pohudel >10:
             self.starve +=1
@@ -200,7 +202,7 @@ class Person():
     def movenment(self):
         '''Обработчик движения'''
 
-        vertFill, vertNone = self.sensor()
+        vertNone = self.sensor()[1]
 
         if len(vertNone) > 0:
             move = rand.choice(vertNone)
@@ -214,8 +216,6 @@ class Person():
     def around_vert(self):
         '''Получает индексы ячеек вокруг песра'''
 
-        #vert_len = int(self.grid.grid_size//self.grid.grid_step)
-        #vert_len = self.grid.grid_size[0] // self.grid.grid_step
         vert_pos = [] # 0 - текущий индекс 1 - верх
 
         X,Y = self.position
@@ -249,7 +249,14 @@ class Person():
 
         return vertFill, vertNone
 
+    def sex_or_die(self):
+        '''Убиваеи или шпехается, жеееесть!'''
 
+        vertFill = self.sensor()[0]
+
+        for vf in vertFill:
+            if self.grid.vertices[vf].object.gender != self.gender:
+                print('sss')
 
     def golodnii_udav_doedaet_sobaku(self):
         if self.starve > 10:
