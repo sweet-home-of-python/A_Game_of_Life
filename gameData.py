@@ -47,6 +47,7 @@ class Grid():
         self.grid_step = grid_step # Расстояние между точками
         self.grid_size = grid_size # Размер сетки (int высота и ширина)
 
+        self.allIndex = []
 
         self.grid_generator() # генерирует сетку присоздании экземпляра
 
@@ -57,14 +58,17 @@ class Grid():
         iY = 0
         for w in range(0,width,self.grid_step):
             for h in range(0,height,self.grid_step):
-                self.vertices[iX] = Vertex((iX,iY),(h,w))
+                key = iX,iY
+                self.allIndex.append(key)
+                self.vertices[key] = Vertex((iX,iY),(h,w))
                 iX+=1
+            iX = 0
             iY+=1
 
 
     def random_vertex(self):
-        vert = rand.choice(self.vertices)
-        return vert.index
+        vert = rand.choice(self.allIndex)
+        return vert
 
 
 class Vertex():
@@ -203,33 +207,26 @@ class Person():
         else:
             move = self.position
 
-        if temp_pos > 0 and temp_pos < len(self.grid.vertices):
-            self.position = temp_pos
-
-        if move > 0 and move < len(self.grid.vertices):
-            if move not in self.grid.up_limits and move not in self.grid.down_limits:
-                self.position = move
-
   
     def around_vert(self):
         '''Получает индексы ячеек вокруг песра'''
 
-        vert_len = int(self.grid.grid_size//self.grid.grid_step)
-
+        #vert_len = int(self.grid.grid_size//self.grid.grid_step)
+        vert_len = self.grid.grid_size[0] // self.grid.grid_step
         vert_pos = [] # 0 - текущий индекс 1 - верх
 
         X,Y = self.position
 
         vert_pos.append(self.position) # центр
 
-        vert_pos.append(X,Y - vert_len)
-        vert_pos.append(X + 1, Y - vert_len)
-        vert_pos.append(X + 1,Y)
-        vert_pos.append(X + 1,Y + vert_len)
-        vert_pos.append(X,Y + vert_len)
-        vert_pos.append(X - 1,Y + vert_len)
-        vert_pos.append(X - 1,Y)
-        vert_pos.append(X - 1,Y - vert_len)
+        vert_pos.append((X,Y - vert_len))
+        vert_pos.append((X + 1, Y - vert_len))
+        vert_pos.append((X + 1,Y))
+        vert_pos.append((X + 1,Y + vert_len))
+        vert_pos.append((X,Y + vert_len))
+        vert_pos.append((X - 1,Y + vert_len))
+        vert_pos.append((X - 1,Y))
+        vert_pos.append((X - 1,Y - vert_len))
 
         return vert_pos
 

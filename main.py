@@ -52,8 +52,12 @@ while Play:
     dead_list = []
     male_list = []
     female_list = []
+    
+    
+    per_limit = 1000 # Лимит персонажей
 
-    ss = grid.random_vertex()
+
+
     
     ## Очистка ячеек
     #for vert in grid.filling_vertlist:
@@ -102,7 +106,7 @@ while Play:
     
 
     
-    per_limit = 10000000000000
+    
 
     if (len(Object.objects)) > per_limit:
         tagg = list(Object.objects.keys())
