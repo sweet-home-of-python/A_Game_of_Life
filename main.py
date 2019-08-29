@@ -56,22 +56,6 @@ while Play:
     
     per_limit = 1000 # Лимит персонажей
 
-
-
-    
-    ## Очистка ячеек
-    #for vert in grid.filling_vertlist:
-    #    grid.vertices[vert].object = None
-    
-    #grid.filling_vertlist = []
-
-    #for key in Object.objects:                      # Заполняет вершины объектами
-    #    key_pos = Object.objects[key].position
-       
-    #    grid.vertices[key_pos].object = Object.objects[key]
-        
-    #    grid.filling_vertlist.append(key_pos)
-
         
         
         #------------ Обработка всех объектов --------------#
