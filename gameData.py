@@ -34,7 +34,6 @@ class Game():
 
 
 
-
 class Grid():
     def __init__(self, grid_step, grid_size):
         '''Создает сетку. Принимает в виде аргумента шаг.'''
@@ -134,7 +133,7 @@ class Person():
 
     def sobachya_zizn(self):
         if self.gender == "sobaka":
-            self.health =1000000000000000
+            self.health = 10000
             self.starve = 10
             self.name = "Pes"
             self.size = 3
@@ -144,7 +143,7 @@ class Person():
         self.movenment()
         self.sex_or_die()
         self.pohudel +=1
-        if self.pohudel >10:
+        if self.pohudel > 10:
             self.starve +=1
             self.pohudel = 0
         self.golodnii_udav_doedaet_sobaku()
@@ -178,25 +177,6 @@ class Person():
         else:
             return False
         
-    def old_move(self):
-        move_direction = [0,1,2,3,4,5,6,7,8] # Направления дввижения.  1 - Вверх
-        move = rand.choice(move_direction)
-
-        temp_pos = self.position
-        vert_pos = self.around_vert()
-
-        if move in [8,1,2]:
-            if vert_pos[0] not in self.grid.up_limits:
-                temp_pos = vert_pos[move]
-        elif move in [4,5,6]:
-            if vert_pos[0] not in self.grid.down_limits:
-                temp_pos = vert_pos[move]
-        else: 
-            temp_pos = vert_pos[move]
-
-        if temp_pos in self.grid.vertices:
-            self.position = temp_pos
-
 
     def movenment(self):
         '''Обработчик движения'''
@@ -294,8 +274,6 @@ class Food():
 
        
 
-
-
 class Spawner():
     '''спавнит объекты'''
     spawnlist = []
@@ -306,7 +284,6 @@ class Spawner():
             print('sosi huy')
         if type == 'food':
             pass
-
 
 
 class Drawer():
