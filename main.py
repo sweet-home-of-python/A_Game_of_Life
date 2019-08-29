@@ -18,11 +18,6 @@ sc = pygame.display.set_mode(game.resolution, display=1)
 pygame.display.set_caption('A Game of Life')
 
 
-#celsc = pygame.display.set_mode(game.resolution, display=0)
-#clock = pygame.time.Clock()сааывафвафывафыв
-
-#persData = grid
-
 
 pesosus = []
 
