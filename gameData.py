@@ -9,7 +9,8 @@ class Game():
                     'white':(255,255,255),
                     'red':(255,0,0),
                     'green':(0,255,0),
-                    'blue':(0,0,255)}
+                    'blue':(0,0,255),
+                    'shit':(255,33,255)}
 
     resolution = 1200,600  # размер экрана
 
@@ -279,9 +280,9 @@ class Food():
     def __init__(self,grid):
        self.position = grid.random_vertex()
        self.food_types = {'myaso': 100,'yabloko':15,'banan':25,'bulka hleba':80,'pivas':50,'steik':70,'olivie':70,'saurma':100,'adrenalin_rush':200,'kuba_libra':150}
-       self.random_food = rand.choise(food_types)
-
-       
+       self.food = rand.choice(list(self.food_types.keys()))
+       self.tag = "food"
+       self.size = 4
 
 class Spawner():
     '''спавнит объекты'''
@@ -296,21 +297,18 @@ class Spawner():
 
 
 class Drawer():
-    def __init__(self):
-        
-        self.size = 5
-        
-
     def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
-        self.size = object.size #приблуда чтобы по размеру отрисовывались
-        pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
-        self.size = object.size #приблуда чтобы по размеру отрисовывались
+        size = object.size #приблуда чтобы по размеру отрисовывались
+        if object.tag =="food":
+            pygame.draw.circle(screen,Game.colors['shit'],grid.vertices[object.position].pos,object.size)
+        else:
+            pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
 
     def pos_to_draw_rect(self, position):
-            '''Преобразует центральные координаты в координаты для квадрата'''
-            x,y = position
-            return  x - self.size, y - self.size, self.size * 2, self.size * 2
+        '''Преобразует центральные координаты в координаты для квадрата'''
+        x,y = position
+        return  x - self.size, y - self.size, self.size * 2, self.size * 2
 
 # Вспомогательные функции
 
