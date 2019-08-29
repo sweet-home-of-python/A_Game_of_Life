@@ -202,6 +202,8 @@ class Person():
     def movenment(self):
         '''Обработчик движения'''
 
+        self.grid.vertices[self.position].object = None
+
         vertNone = self.sensor()[1]
 
         if len(vertNone) > 0:
@@ -211,8 +213,9 @@ class Person():
 
         if move in self.grid.vertices:  # Нужно оптимизировать
             self.position = move
-
-  
+        
+        self.grid.vertices[self.position].object = self
+    
     def around_vert(self):
         '''Получает индексы ячеек вокруг песра'''
 
@@ -256,7 +259,9 @@ class Person():
 
         for vf in vertFill:
             if self.grid.vertices[vf].object.gender != self.gender:
-                print('sss')
+                
+                # print('sss')
+                pass
 
     def golodnii_udav_doedaet_sobaku(self):
         if self.starve > 10:
