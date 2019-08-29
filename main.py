@@ -56,7 +56,7 @@ while Play:
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
 
 
-        Object.objects[key].udav_ne_lubit_pisku_v_rot() # Обработчик действий
+        Object.objects[key].handler() # Обработчик действий
 
 
 
