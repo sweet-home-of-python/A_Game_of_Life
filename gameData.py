@@ -103,17 +103,18 @@ class Person():
 
 
         # Особенности
-        self.pohudel = 0
+        
         self.age = 10 # возраст
         self.gender = self.random_gender()
         self.name = self.nameos()
+        self.spicies = 'human'
         
         # параметры организма
         self.health = 100
         
         self.starve = 0
         self.alive = True
-
+        self.pohudel = 0
 
 
         self.eat = False
@@ -121,7 +122,7 @@ class Person():
         self.size = 10 #размер ебаного организма
         
         self.color = self.gender_color()
-        #self.cells = persData
+
         
 
         self.sensetive = 1 # Чуствительность
@@ -160,7 +161,7 @@ class Person():
 
     def random_gender(self):
         '''Генерирует пол особи'''
-        genders = ['male','female','sobaka']
+        genders = ['male','female']
         return rand.choice(genders)
 
     def gender_color(self):

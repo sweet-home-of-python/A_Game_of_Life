@@ -20,16 +20,11 @@ pygame.display.set_caption('A Game of Life')
 
 
 
-pesosus = []
-
 
 Play = True # Запуск
 
 drawer = Drawer()
 
-
-#for i in range(0,10):
-#    pesosus.append(Person(str(i)))
 
 count = 1000
 Play = True
