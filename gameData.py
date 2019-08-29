@@ -110,7 +110,7 @@ class Person():
         self.spicies = 'human'
         
         # параметры организма
-        self.health = 100
+        self.health = 1000000000000
         
         self.hunger = 0
         self.alive = True
@@ -153,11 +153,11 @@ class Person():
 
         self.age +=1 # старение
         self.movenment() # Движение
-        self.sex_or_die() # Размножение   
+        #self.sex_or_die() # Размножение   
 
-        self.starve() # Обрабатывает голод
-        self.death_reason()
-        self.death()
+        #self.starve() # Обрабатывает голод
+        #self.death_reason()
+        #self.death()
 
     def random_gender(self):
         '''Генерирует пол особи'''
@@ -245,12 +245,13 @@ class Person():
 
         for vf in vertFill:
             if self.grid.vertices[vf].object.gender != self.gender:
-                
-                # print('sss')
-            pass
+                print('done')
+                return True
+            else: 
+                return False
 
     def starve(self):
-        if self.hunger > 10:
+        if self.hunger > 10000:
             self.health -=1
 
    
@@ -291,7 +292,7 @@ class Spawner():
             print('sosi huy')
         if type == 'food':
             pass
-
+        print(len(Object.objects))
 
 class Drawer():
     def __init__(self):
