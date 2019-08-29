@@ -101,16 +101,14 @@ class Person():
 
 
         # Особенности
+        self.pohudel = 0
         self.age = 10 # возраст
         self.gender = self.random_gender()
-        self.species = 'human'
         self.name = self.nameos()
         
         # параметры организма
         self.health = 100
         
-        self.pohudel = 0
-
         self.starve = 0
         self.alive = True
 
@@ -121,7 +119,8 @@ class Person():
         self.size = 10 #размер ебаного организма
         
         self.color = self.gender_color()
-
+        #self.cells = persData
+        
 
         self.sensetive = 1 # Чуствительность
 
@@ -133,7 +132,7 @@ class Person():
         
 
     def sobachya_zizn(self):
-        if self.spicies == "sobaka":
+        if self.gender == "sobaka":
             self.health = 10000
             self.starve = 10
             self.name = "Pes"
@@ -153,7 +152,7 @@ class Person():
 
     def random_gender(self):
         '''Генерирует пол особи'''
-        genders = ['male','female']
+        genders = ['male','female','sobaka']
         return rand.choice(genders)
 
     def gender_color(self):
