@@ -53,12 +53,17 @@ while Play:
 
     for key in Object.objects:
         
-        lable = Object.objects[key].textolit() 
-        sc.blit(lable,(grid.vertices[Object.objects[key].position].pos[0]-30,grid.vertices[Object.objects[key].position].pos[1]-25))
+        #lable = Object.objects[key].textolit() 
+        #sc.blit(lable,(grid.vertices[Object.objects[key].position].pos[0]-30,grid.vertices[Object.objects[key].position].pos[1]-25))
+
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
+        
+        
+        if Object.objects[key].sex_or_die():
+            count += 1
 
-
-        Object.objects[key].udav_ne_lubit_pisku_v_rot() # Обработчик действий
+        Object.objects[key].handler() # Обработчик действий
+        
 
 
 
@@ -87,6 +92,10 @@ while Play:
                 del Object.objects[tag]
 
 
+
+
+    for i in range(0,count):
+        Spawner.SpawnObject(grid,grid.random_vertex())
    
 
     game.refresh_screen(20) # Обновляет экран 
@@ -101,7 +110,7 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,1):
+            for i in range(0,100):
                 Spawner.SpawnObject(grid,grid.random_vertex())
            
             print(len(Object.objects))

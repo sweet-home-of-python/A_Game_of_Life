@@ -105,15 +105,15 @@ class Person():
 
         # Особенности
         
-        self.age = 10 # возраст
+        self.age = 0 # возраст
         self.gender = self.random_gender()
         self.name = self.nameos()
         self.spicies = 'human'
         
         # параметры организма
-        self.health = 100
+        self.health = 1000000000000
         
-        self.starve = 0
+        self.hunger = 0
         self.alive = True
         self.pohudel = 0
 
@@ -142,23 +142,23 @@ class Person():
         return label
 
     def sobachya_zizn(self):
-        if self.gender == "sobaka":
+        if self.spicies == "sobaka":
             self.health = 10000
             self.starve = 10
-            self.name = "Pes"
+            self.name = "Pyosina"
             self.size = 3
+            self.color = Game.colors['red']
 
-    def udav_ne_lubit_pisku_v_rot(self):
-        self.sobachya_zizn()
-        self.movenment()
-        self.sex_or_die()
-        self.pohudel +=1
-        if self.pohudel > 10:
-            self.starve +=1
-            self.pohudel = 0
-        self.golodnii_udav_doedaet_sobaku()
-        self.death_reason()
-        self.death()
+    def handler(self):
+        '''Обрабатываец цикличные функции'''
+
+        self.age +=1 # старение
+        self.movenment() # Движение
+        #self.sex_or_die() # Размножение   
+
+        #self.starve() # Обрабатывает голод
+        #self.death_reason()
+        #self.death()
 
     def random_gender(self):
         '''Генерирует пол особи'''
@@ -171,8 +171,6 @@ class Person():
             return Game.colors['black']
         if self.gender == 'female':
             return Game.colors['blue']
-        if self.gender == 'sobaka':
-            return Game.colors['red']
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
@@ -248,12 +246,13 @@ class Person():
 
         for vf in vertFill:
             if self.grid.vertices[vf].object.gender != self.gender:
-                
-                # print('sss')
-                pass
+                print('done')
+                return True
+            else: 
+                return False
 
-    def golodnii_udav_doedaet_sobaku(self):
-        if self.starve > 10:
+    def starve(self):
+        if self.hunger > 10000:
             self.health -=1
 
    
@@ -294,7 +293,7 @@ class Spawner():
             print('sosi huy')
         if type == 'food':
             pass
-
+        print(len(Object.objects))
 
 class Drawer():
     def drawObjects(self,object,grid,screen):
