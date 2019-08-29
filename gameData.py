@@ -1,6 +1,8 @@
 import random as rand
 import pygame
 import time 
+from pygame.locals import *
+
 #from miscLife import*
 class Game():
     colors = {'black': (0,0,0),
@@ -130,6 +132,12 @@ class Person():
         self.life_time = 0
 
         
+    def textolit(self):
+        
+        default_font = pygame.font.get_default_font()
+        font_renderer = pygame.font.Font(default_font, 14)
+        label = font_renderer.render(self.name,1,(0,0,0))
+        return label
 
     def sobachya_zizn(self):
         if self.gender == "sobaka":
