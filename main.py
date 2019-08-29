@@ -14,6 +14,7 @@ grid = Grid(10,game.resolution) # Создаем сетку
 
 
 pygame.init()
+pygame.font.init()
 sc = pygame.display.set_mode(game.resolution, display=1)
 pygame.display.set_caption('A Game of Life')
 
@@ -33,7 +34,7 @@ filling_vertlist = []
 while Play:
     
     sc.fill(game.colors['white'])# Заливка
-
+    
     #cell_visualisator(sc,grid.vertices,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
     
     
@@ -52,7 +53,8 @@ while Play:
 
     for key in Object.objects:
         
-     
+        lable = Object.objects[key].textolit() 
+        sc.blit(lable,(grid.vertices[Object.objects[key].position].pos[0]-30,grid.vertices[Object.objects[key].position].pos[1]-25))
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
 
 
