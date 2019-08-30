@@ -139,7 +139,7 @@ class Person():
         
         default_font = pygame.font.get_default_font()
         font_renderer = pygame.font.Font(default_font, 14)
-        label = font_renderer.render(self.name,1,(0,0,0))
+        label = font_renderer.render('{}     {}'.format(self.name,Objects.ob),1,(0,0,0))
         return label
 
     def sobachya_zizn(self):
@@ -213,7 +213,7 @@ class Person():
 
         X,Y = self.position
 
-        vert_pos.append(self.position) # центр
+        vert_pos.append(self.position2) # центр 
 
         vert_pos.append((X,Y - 1))
         vert_pos.append((X + 1, Y - 1))

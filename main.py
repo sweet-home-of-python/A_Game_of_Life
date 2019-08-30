@@ -52,21 +52,24 @@ while Play:
         #------------ Обработка всех объектов --------------#
 
     for key in Object.objects:
-
         
         
-
-        #lable = Object.objects[key].textolit() 
-        #sc.blit(lable,(grid.vertices[Object.objects[key].position].pos[0]-30,grid.vertices[Object.objects[key].position].pos[1]-25))
-
-        drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
         
         if Object.objects[key].tag != 'food':
-            dead_list.append(Object.objects[key].kushat())
-            if Object.objects[key].sex_or_die():
-                count += 1
 
-            Object.objects[key].handler() # Обработчик действий
+
+            #lable = Object.objects[key].textolit() 
+            #sc.blit(lable,(grid.vertices[Object.objects[key].position].pos[0]-30,grid.vertices[Object.objects[key].position].pos[1]-25))
+
+
+            drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
+        
+            if Object.objects[key].tag != 'food':
+                dead_list.append(Object.objects[key].kushat())
+                if Object.objects[key].sex_or_die():
+                    count += 1
+
+                Object.objects[key].handler() # Обработчик действий
         
 
 
@@ -85,7 +88,8 @@ while Play:
             del Object.objects[tag]
     
 
-    
+    for i in range(0,count):
+        Spawner.SpawnObject(grid,grid.random_vertex())   
     
 
     if (len(Object.objects)) > per_limit:
@@ -99,8 +103,7 @@ while Play:
 
 
 
-    for i in range(0,count):
-        Spawner.SpawnObject(grid,grid.random_vertex())
+
    
 
     #vertexInConsole(grid)
