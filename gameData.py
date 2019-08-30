@@ -83,9 +83,10 @@ class Vertex():
 class Object():
     objects = {}
 
-    statistic = {'personObject':0,
-                 'staticObject':0,
-                 'dynamicObject':0
+    statistic = {'person':0,
+                 'static':0,
+                 'dynamic':0,
+                 'food':0
                  }
 
     def get_object(obj):
@@ -96,7 +97,7 @@ class Object():
 
 class Person():
     def __init__(self,grid,position):
-        self.class_name = 'Person' + str(Object.statistic['personObject'])
+        self.class_name = 'Person' + str(Object.statistic['person'])
         self.tag = 'person'
         
 
@@ -238,6 +239,16 @@ class Person():
                     vertFill.append(vert)
 
         return vertFill, vertNone
+    def kushat(self):
+        vf = self.sensor()[0]
+        for v in vf:
+
+            object = self.grid.vertices[v].object
+            if object.tag == 'food':
+                return (object.class_name)
+        
+
+        
 
     def sex_or_die(self):
         '''Убиваеи или шпехается, жеееесть!'''
@@ -252,9 +263,9 @@ class Person():
                 return False
 
     def starve(self):
-        if self.hunger > 10000:
+        if self.hunger > 100:
             self.health -=1
-
+    
    
     def nameos(self):
         '''Возвращает имя из списка имен.'''
@@ -276,15 +287,15 @@ class Person():
 
 
 class Food():
-
-    def __init__(self,grid,position):
-       self.class_name = 'Food' 
+    
+    def __init__(self,grid):
+       self.class_name = 'food' + str(Object.statistic['food'])
+       self.tag = 'food'
        self.position = grid.random_vertex()
-       position = self.position
        self.food_types = {'myaso': 100,'yabloko':15,'banan':25,'bulka hleba':80,'pivas':50,'steik':70,'olivie':70,'saurma':100,'adrenalin_rush':200,'kuba_libra':150}
        self.food = rand.choice(list(self.food_types.keys()))
-       self.tag = "food"
        self.size = 4
+       grid.vertices[self.position].object = self
 
 class Spawner():
     '''спавнит объекты'''
@@ -295,13 +306,13 @@ class Spawner():
         if type == 'huerson':
             print('sosi huy')
         if type == 'food':
-            Object.get_object(Food(grid, position))
+            Object.get_object(Food(grid))
         print(len(Object.objects))
 
 class Drawer():
     def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
-        size = object.size #приблуда чтобы по размеру отрисовывались
+        self.size = object.size #приблуда чтобы по размеру отрисовывались
         if object.tag =="food":
             pygame.draw.circle(screen,Game.colors['shit'],grid.vertices[object.position].pos,object.size)
         else:

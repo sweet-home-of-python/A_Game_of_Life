@@ -52,29 +52,34 @@ while Play:
         #------------ Обработка всех объектов --------------#
 
     for key in Object.objects:
+
         
+        
+
         #lable = Object.objects[key].textolit() 
         #sc.blit(lable,(grid.vertices[Object.objects[key].position].pos[0]-30,grid.vertices[Object.objects[key].position].pos[1]-25))
 
         drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
         
-        
-        if Object.objects[key].sex_or_die():
-            count += 1
+        if Object.objects[key].tag != 'food':
+            dead_list.append(Object.objects[key].kushat())
+            if Object.objects[key].sex_or_die():
+                count += 1
 
-        Object.objects[key].handler() # Обработчик действий
+            Object.objects[key].handler() # Обработчик действий
         
 
 
 
         # Обработка смерти
             
-        if  Object.objects[key].alive == False:
-            dead_list.append(key)
+            if  Object.objects[key].alive == False:
+                dead_list.append(key)
 
 
 
     # Убирает список персов
+    
     for tag in dead_list:
         if tag in Object.objects:
             del Object.objects[tag]
@@ -110,12 +115,12 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,100):
+            for i in range(0,10):
                 Spawner.SpawnObject(grid,grid.random_vertex())
         if keys[pygame.K_e]:
-            for i in range(0,100):
+            for i in range(0,1):
                 Spawner.SpawnObject(grid,grid.random_vertex(),'food')   
-            print(len(Object.objects))
+        print(len(Object.objects))
   
 
 pygame.quit ()
