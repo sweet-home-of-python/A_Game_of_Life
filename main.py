@@ -117,12 +117,12 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,10):
+            for i in range(0,1):
                 Spawner.SpawnObject(grid,grid.random_vertex())
         if keys[pygame.K_e]:
             for i in range(0,1):
                 Spawner.SpawnObject(grid,grid.random_vertex(),'food')   
-        print(len(Object.objects))
+        # print(len(Object.objects))
   
 
 pygame.quit ()
