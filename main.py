@@ -63,11 +63,11 @@ while Play:
         
         if Object.objects[key].tag != 'food':
             dead_list.append(Object.objects[key].kushat())
-            if Object.objects[key].sex_or_die():
-                count += 1
+            if Object.objects[key].sex_or_die()==True:
+                count +=1
 
             Object.objects[key].handler() # Обработчик действий
-        
+            
 
 
 
@@ -85,7 +85,8 @@ while Play:
             del Object.objects[tag]
     
 
-    
+    for i in range(0,count):
+        Spawner.SpawnObject(grid,grid.random_vertex())
     
 
     if (len(Object.objects)) > per_limit:
@@ -99,8 +100,7 @@ while Play:
 
 
 
-    for i in range(0,count):
-        Spawner.SpawnObject(grid,grid.random_vertex())
+    
    
 
     #vertexInConsole(grid)
