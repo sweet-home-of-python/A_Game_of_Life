@@ -103,6 +103,8 @@ while Play:
         Spawner.SpawnObject(grid,grid.random_vertex())
    
 
+    #vertexInConsole(grid)
+
     game.refresh_screen(20) # Обновляет экран 
 
     keys = pygame.key.get_pressed()
