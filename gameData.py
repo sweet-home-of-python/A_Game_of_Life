@@ -1,6 +1,7 @@
 import random as rand
 import pygame
 import time 
+import os
 from pygame.locals import *
 
 #from miscLife import*
@@ -96,7 +97,7 @@ class Object():
 
 class Person():
     def __init__(self,grid,position):
-        self.class_name = 'Person' + str(Object.statistic['personObject'])
+        self.class_name = 'Person' + str(Object.statistic['person'])
         self.tag = 'person'
         
 
@@ -296,7 +297,7 @@ class Spawner():
             print('sosi huy')
         if type == 'food':
             Object.get_object(Food(grid, position))
-        print(len(Object.objects))
+        #print(len(Object.objects))
 
 class Drawer():
     def __init(self):
@@ -330,5 +331,21 @@ def cell_visualisator(screen,cells,radius):
 
 def vertexInConsole(grid):
     verts = grid.vertices.keys()
+    text = ''
+    prvert = 0
+    
 
+    for key in  grid.vertices:
+        if key[1] == prvert:
+            if grid.vertices[key].object != None:
+                text += ' 1 '
+            else:
+                text += ' 0 '
+        else:
+            prvert = key[1]
+            text += '\n'
+    os.system('cls')
+    print(text)
+
+    
         

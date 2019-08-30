@@ -98,6 +98,8 @@ while Play:
         Spawner.SpawnObject(grid,grid.random_vertex())
    
 
+    #vertexInConsole(grid)
+
     game.refresh_screen(20) # Обновляет экран 
 
     keys = pygame.key.get_pressed()
@@ -110,7 +112,7 @@ while Play:
             pygame.quit()
         
         if keys[pygame.K_q]:
-            for i in range(0,100):
+            for i in range(0,1):
                 Spawner.SpawnObject(grid,grid.random_vertex())
         if keys[pygame.K_e]:
             for i in range(0,100):
