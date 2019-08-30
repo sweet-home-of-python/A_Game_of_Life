@@ -98,7 +98,7 @@ class Object():
 
 class Person():
     def __init__(self,grid,position):
-        self.class_name = 'Person' + str(Object.statistic['person'])
+        self.class_name = 'person' + str(Object.statistic['person'])
         self.tag = 'person'
         
 
@@ -213,7 +213,7 @@ class Person():
 
         X,Y = self.position
 
-        vert_pos.append(self.position2) # центр 
+        #vert_pos.append(self.position) # центр
 
         vert_pos.append((X,Y - 1))
         vert_pos.append((X + 1, Y - 1))
@@ -262,8 +262,9 @@ class Person():
         '''Убиваеи или шпехается, жеееесть!'''
 
         vertFill = self.sensor()[0]
-
+        
         for vf in vertFill:
+           
             if self.grid.vertices[vf].object.gender != self.gender:
                 return True
             else: 
