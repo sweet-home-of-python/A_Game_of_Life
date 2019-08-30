@@ -113,8 +113,7 @@ class Person():
         self.spicies = 'human'
         
         # параметры организма
-        self.health = 1000000000000
-        
+        self.health = 1000
         self.hunger = 0
         self.alive = True
         self.pohudel = 0
@@ -157,10 +156,12 @@ class Person():
         self.age +=1 # старение
         self.movenment() # Движение
         #self.sex_or_die() # Размножение   
-
-        #self.starve() # Обрабатывает голод
-        #self.death_reason()
-        #self.death()
+        self.hunger += 1
+        self.starve()
+        
+        # Обрабатывает голод
+        self.death_reason()
+        self.death()
 
     def random_gender(self):
         '''Генерирует пол особи'''
@@ -176,8 +177,8 @@ class Person():
 
     def death_reason(self):
         ''' Различный причины смерти пиздюка'''
-        if self.age >= 40:
-            self.alive = False
+        #if self.age >= 40:
+           # self.alive = False
         if self.health <= 0:
             self.alive = False
     
@@ -240,13 +241,19 @@ class Person():
                     vertFill.append(vert)
 
         return vertFill, vertNone
+
     def kushat(self):
         vf = self.sensor()[0]
         for v in vf:
-
             object = self.grid.vertices[v].object
             if object.tag == 'food':
+                self.hunger -= object.food_types[object.food]
+                print(object.food)
+                print(self.hunger)
+                print(self.health)
+                self.grid.vertices[v].object = None
                 return (object.class_name)
+                
         
 
         
@@ -264,7 +271,7 @@ class Person():
                 return False
 
     def starve(self):
-        if self.hunger > 100:
+        if self.hunger > 50:
             self.health -=1
     
    
@@ -307,7 +314,7 @@ class Spawner():
         if type == 'huerson':
             print('sosi huy')
         if type == 'food':
-            Object.get_object(Food(grid, position))
+            Object.get_object(Food(grid))
         #print(len(Object.objects))
 
 class Drawer():
