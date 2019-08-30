@@ -240,6 +240,7 @@ class Person():
                     vertFill.append(vert)
 
         return vertFill, vertNone
+    
     def kushat(self):
         vf = self.sensor()[0]
         for v in vf:
@@ -258,7 +259,6 @@ class Person():
 
         for vf in vertFill:
             if self.grid.vertices[vf].object.gender != self.gender:
-                print('done')
                 return True
             else: 
                 return False
@@ -307,7 +307,7 @@ class Spawner():
         if type == 'huerson':
             print('sosi huy')
         if type == 'food':
-            Object.get_object(Food(grid, position))
+            Object.get_object(Food(grid))
         #print(len(Object.objects))
 
 class Drawer():
