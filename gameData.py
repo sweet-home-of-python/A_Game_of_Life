@@ -90,14 +90,14 @@ class Object():
 
     def get_object(obj):
         Object.objects[obj.class_name] = obj
-        Object.statistic[obj.class_tag] = Object.statistic[obj.class_tag] + 1
+        Object.statistic[obj.tag] = Object.statistic[obj.tag] + 1
     
 
 
 class Person():
     def __init__(self,grid,position):
         self.class_name = 'Person' + str(Object.statistic['personObject'])
-        self.class_tag = 'personObject'
+        self.tag = 'person'
         
 
         self.grid = grid
@@ -276,8 +276,11 @@ class Person():
 
 
 class Food():
-    def __init__(self,grid):
+
+    def __init__(self,grid,position):
+       self.class_name = 'Food' 
        self.position = grid.random_vertex()
+       position = self.position
        self.food_types = {'myaso': 100,'yabloko':15,'banan':25,'bulka hleba':80,'pivas':50,'steik':70,'olivie':70,'saurma':100,'adrenalin_rush':200,'kuba_libra':150}
        self.food = rand.choice(list(self.food_types.keys()))
        self.tag = "food"
@@ -292,7 +295,7 @@ class Spawner():
         if type == 'huerson':
             print('sosi huy')
         if type == 'food':
-            pass
+            Object.get_object(Food(grid, position))
         print(len(Object.objects))
 
 class Drawer():
