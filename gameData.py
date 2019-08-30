@@ -90,14 +90,14 @@ class Object():
 
     def get_object(obj):
         Object.objects[obj.class_name] = obj
-        Object.statistic[obj.class_tag] = Object.statistic[obj.class_tag] + 1
+        Object.statistic[obj.tag] = Object.statistic[obj.tag] + 1
     
 
 
 class Person():
     def __init__(self,grid,position):
         self.class_name = 'Person' + str(Object.statistic['personObject'])
-        self.class_tag = 'personObject'
+        self.tag = 'personObject'
         
 
         self.grid = grid
@@ -296,12 +296,17 @@ class Spawner():
         print(len(Object.objects))
 
 class Drawer():
+    def __init(self):
+        self.size =10
+
     def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
         size = object.size #приблуда чтобы по размеру отрисовывались
         if object.tag =="food":
+            self.size = object.size
             pygame.draw.circle(screen,Game.colors['shit'],grid.vertices[object.position].pos,object.size)
         else:
+            self.size = object.size
             pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
 
     def pos_to_draw_rect(self, position):
