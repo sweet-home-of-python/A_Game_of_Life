@@ -310,12 +310,17 @@ class Spawner():
         print(len(Object.objects))
 
 class Drawer():
+    def __init(self):
+        self.size =10
+
     def drawObjects(self,object,grid,screen):
         '''Рисует принятый объект(ы)'''
         self.size = object.size #приблуда чтобы по размеру отрисовывались
         if object.tag =="food":
+            self.size = object.size
             pygame.draw.circle(screen,Game.colors['shit'],grid.vertices[object.position].pos,object.size)
         else:
+            self.size = object.size
             pygame.draw.rect(screen, object.color, self.pos_to_draw_rect(grid.vertices[object.position].pos))
 
     def pos_to_draw_rect(self, position):
@@ -334,5 +339,7 @@ def cell_visualisator(screen,cells,radius):
         pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
         i+=1
 
+def vertexInConsole(grid):
+    verts = grid.vertices.keys()
 
-    
+        
