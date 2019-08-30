@@ -12,7 +12,7 @@ game = Game() # Класс настроек
 grid = Grid(10,game.resolution) # Создаем сетку
 ###################################
 
-shashlik = Food(grid)
+
 pygame.init()
 pygame.font.init()
 sc = pygame.display.set_mode(game.resolution, display=1)
@@ -34,7 +34,7 @@ filling_vertlist = []
 while Play:
     
     sc.fill(game.colors['white'])# Заливка
-    drawer.drawObjects(shashlik,grid,sc) # Новая отрисовка
+    
     #cell_visualisator(sc,grid.vertices,2) # Работает медленно, нужно отображение переделывать/ Курю документацию
     
     
@@ -112,9 +112,11 @@ while Play:
         if keys[pygame.K_q]:
             for i in range(0,100):
                 Spawner.SpawnObject(grid,grid.random_vertex())
-           
+        if keys[pygame.K_e]:
+            for i in range(0,100):
+                Spawner.SpawnObject(grid,grid.random_vertex(),'food')   
             print(len(Object.objects))
-    print(shashlik.food)
+  
 
 pygame.quit ()
     
