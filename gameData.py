@@ -83,7 +83,7 @@ class Vertex():
 class Object():
     objects = {}
 
-    statistic = {'personObject':0,
+    statistic = {'person':0,
                  'staticObject':0,
                  'dynamicObject':0
                  }
@@ -328,5 +328,7 @@ def cell_visualisator(screen,cells,radius):
         pygame.draw.circle(screen,Game.colors['black'],cells[cell].pos,radius)
         i+=1
 
+def vertexInConsole(grid):
+    verts = grid.vertices.keys()
 
-    
+        
