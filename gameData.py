@@ -140,7 +140,7 @@ class Person():
         
         default_font = pygame.font.get_default_font()
         font_renderer = pygame.font.Font(default_font, 14)
-        label = font_renderer.render(self.name,1,(0,0,0))
+        label = font_renderer.render('{}     {}'.format(self.name,Objects.ob),1,(0,0,0))
         return label
 
     def sobachya_zizn(self):
@@ -247,7 +247,7 @@ class Person():
                     vertFill.append(vert)
 
         return vertFill, vertNone
-
+    
     def kushat(self):
         vf = self.sensor()[0]
         for v in vf:
