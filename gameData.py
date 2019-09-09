@@ -103,10 +103,11 @@ class Person():
         
 
         self.grid = grid
-
+        self.count = 0
 
         # Особенности
-        
+        self.sex_again = False
+        self.sex_ready = False
         self.age = 0 # возраст
         self.gender = self.random_gender()
         self.name = self.nameos()
@@ -152,17 +153,22 @@ class Person():
 
     def handler(self):
         '''Обрабатываец цикличные функции'''
-
+        self.count +=1
         self.age +=1 # старение
         self.movenment() # Движение
         #self.sex_or_die() # Размножение   
         self.hunger += 1
         self.starve()
-        
+        if self.count > 50:
+            self.sex_again = True
+        if self.age > 100:
+            if self.sex_again == True:
+                
+                self.sex_ready = True
         # Обрабатывает голод
         self.death_reason()
         self.death()
-
+        
     def random_gender(self):
         '''Генерирует пол особи'''
         genders = ['male','female']
@@ -263,16 +269,20 @@ class Person():
         vertFill = self.sensor()[0]
         
         for vf in vertFill:
-            if self.grid.vertices[vf].object.tag != 'food': 
+            if self.grid.vertices[vf].object.tag != 'food' and self.tag != 'food':
                 if self.grid.vertices[vf].object.gender != self.gender:
-                    if self.gender == 'female':
-                        return 666
+                        if self.gender == 'female':
+                            if self.sex_ready == True:
+                                print("zahnulsya")
+                                return 666
+                                self.sex_again = False
+                                self.count = 0
                 else:
-                    if self.grid.vertices[vf].object.health != self.health:           
-                        if self.grid.vertices[vf].object.health > self.health:
-                            return self.class_name
-                        if self.grid.vertices[vf].object.health < self.health:
-                            return self.grid.vertices[vf].object.class_name
+                        if self.grid.vertices[vf].object.health != self.health:           
+                            if self.grid.vertices[vf].object.health > self.health:
+                                return self.class_name
+                            if self.grid.vertices[vf].object.health < self.health:
+                                return self.grid.vertices[vf].object.class_name
 
     def starve(self):
         if self.hunger > 50:
