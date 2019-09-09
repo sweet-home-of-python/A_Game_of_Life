@@ -64,10 +64,13 @@ while Play:
 
             drawer.drawObjects(Object.objects[key],grid,sc) # Новая отрисовка
         
-            if Object.objects[key].tag != 'food':
-                dead_list.append(Object.objects[key].kushat())
-                if Object.objects[key].sex_or_die():
-                    count += 1
+        if Object.objects[key].tag != 'food':
+            dead_list.append(Object.objects[key].kushat())
+            if Object.objects[key].sex_or_die()==666:
+                count +=1
+            if Object.objects[key].sex_or_die()!=True:
+                dead_list.append(Object.objects[key].sex_or_die())
+
 
                 Object.objects[key].handler() # Обработчик действий
         
@@ -123,9 +126,9 @@ while Play:
             for i in range(0,1):
                 Spawner.SpawnObject(grid,grid.random_vertex())
         if keys[pygame.K_e]:
-            for i in range(0,1):
+            for i in range(0,100):
                 Spawner.SpawnObject(grid,grid.random_vertex(),'food')   
-        # print(len(Object.objects))
+    print(len(Object.objects))
   
 
 pygame.quit ()
