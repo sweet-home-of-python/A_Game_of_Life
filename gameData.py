@@ -248,13 +248,12 @@ class Person():
             object = self.grid.vertices[v].object
             if object.tag == 'food':
                 self.hunger -= object.food_types[object.food]
-                print(object.food)
-                print(self.hunger)
-                print(self.health)
+                
                 self.grid.vertices[v].object = None
                 return (object.class_name)
                 
         
+
 
         
 
@@ -264,12 +263,16 @@ class Person():
         vertFill = self.sensor()[0]
         
         for vf in vertFill:
-           
-            if self.grid.vertices[vf].object.gender != self.gender:
-                print('inside')
-                return True
-            else: 
-                return False
+            if self.grid.vertices[vf].object.tag != 'food': 
+                if self.grid.vertices[vf].object.gender != self.gender:
+                    if self.gender == 'female':
+                        return 666
+                else:
+                    if self.grid.vertices[vf].object.health != self.health:           
+                        if self.grid.vertices[vf].object.health > self.health:
+                            return self.class_name
+                        if self.grid.vertices[vf].object.health < self.health:
+                            return self.grid.vertices[vf].object.class_name
 
     def starve(self):
         if self.hunger > 50:
